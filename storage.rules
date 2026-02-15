@@ -1,0 +1,64 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isValidImageFile() {
+      return request.resource.contentType.matches('image/.*');
+    }
+    
+    function isValidImageSize() {
+      return request.resource.size < 5 * 1024 * 1024; // 5MB
+    }
+    
+    // Property images
+    match /properties/{propertyId}/{imageId} {
+      // Anyone can read property images (public listings)
+      allow read: if true;
+      
+      // Only authenticated landlords can upload property images
+      allow write: if isAuthenticated() && 
+                     isValidImageFile() && 
+                     isValidImageSize();
+    }
+    
+    // Maintenance request images
+    match /maintenance/{requestId}/{imageId} {
+      // Only authenticated users involved in the maintenance request can read
+      allow read: if isAuthenticated();
+      
+      // Only authenticated tenants can upload maintenance images (max 3)
+      allow write: if isAuthenticated() && 
+                     isValidImageFile() && 
+                     isValidImageSize();
+    }
+    
+    // User profile images
+    match /users/{userId}/profile/{imageId} {
+      // Anyone can read profile images
+      allow read: if true;
+      
+      // Only the user can upload their own profile image
+      allow write: if isOwner(userId) && 
+                     isValidImageFile() && 
+                     isValidImageSize();
+    }
+    
+    // Lease documents
+    match /leases/{leaseId}/{documentId} {
+      // Only authenticated users involved in the lease can read
+      allow read: if isAuthenticated();
+      
+      // Only authenticated landlords can upload lease documents
+      allow write: if isAuthenticated();
+    }
+  }
+}
