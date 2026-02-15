@@ -46,15 +46,15 @@ jest.mock('firebase/firestore', () => {
   };
 });
 
-jest.mock('./imageUploadService', () => ({
-  imageUploadService: {
+jest.mock('./cloudinaryService', () => ({
+  cloudinaryService: {
     uploadImages: jest.fn(),
     deleteImage: jest.fn(),
   },
 }));
 
 import * as firestore from 'firebase/firestore';
-import { imageUploadService } from './imageUploadService';
+import { cloudinaryService } from './cloudinaryService';
 
 describe('MaintenanceService', () => {
   beforeEach(() => {
@@ -411,9 +411,9 @@ describe('MaintenanceService', () => {
         data: () => mockRequest,
       });
 
-      (imageUploadService.uploadImages as jest.Mock).mockResolvedValue([
-        'https://storage.example.com/image1.jpg',
-        'https://storage.example.com/image2.jpg',
+      (cloudinaryService.uploadImages as jest.Mock).mockResolvedValue([
+        'https://res.cloudinary.com/dlrxspk2c/image/upload/image1.jpg',
+        'https://res.cloudinary.com/dlrxspk2c/image/upload/image2.jpg',
       ]);
 
       (firestore.updateDoc as jest.Mock).mockResolvedValue(undefined);
@@ -423,9 +423,9 @@ describe('MaintenanceService', () => {
       const result = await maintenanceService.uploadMaintenanceImages('request-123', mockFiles);
 
       expect(result).toHaveLength(2);
-      expect(imageUploadService.uploadImages).toHaveBeenCalledWith(
+      expect(cloudinaryService.uploadImages).toHaveBeenCalledWith(
         mockFiles,
-        'maintenance/request-123',
+        'ikhaya/maintenance/request-123',
         2
       );
       expect(firestore.updateDoc).toHaveBeenCalled();

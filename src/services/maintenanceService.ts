@@ -20,7 +20,7 @@ import {
   MaintenanceNote,
 } from '../types/firebase';
 import { COLLECTIONS } from '../types/firestore-schema';
-import { imageUploadService } from './imageUploadService';
+import { cloudinaryService } from './cloudinaryService';
 
 /**
  * Data Transfer Object for maintenance request creation
@@ -292,11 +292,11 @@ class MaintenanceService {
         );
       }
 
-      // Upload images to Firebase Storage
-      const storagePath = `maintenance/${requestId}`;
-      const downloadURLs = await imageUploadService.uploadImages(
+      // Upload images to Cloudinary
+      const folder = `ikhaya/maintenance/${requestId}`;
+      const downloadURLs = await cloudinaryService.uploadImages(
         images,
-        storagePath,
+        folder,
         images.length
       );
 
@@ -338,7 +338,7 @@ class MaintenanceService {
       const updatedImages = (maintenanceData.images || []).filter((url) => url !== imageUrl);
 
       // Delete image from storage
-      await imageUploadService.deleteImage(imageUrl);
+      await cloudinaryService.deleteImage(imageUrl);
 
       // Update maintenance request
       await updateDoc(maintenanceRef, {

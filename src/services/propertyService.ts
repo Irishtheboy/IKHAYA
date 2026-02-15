@@ -18,7 +18,7 @@ import {
 import { db } from '../config/firebase';
 import { Property, PropertyStatus, PropertyType } from '../types/firebase';
 import { COLLECTIONS } from '../types/firestore-schema';
-import { imageUploadService } from './imageUploadService';
+import { cloudinaryService } from './cloudinaryService';
 
 /**
  * Data Transfer Object for property creation
@@ -429,11 +429,11 @@ class PropertyService {
         );
       }
 
-      // Upload images to Firebase Storage
-      const storagePath = `properties/${propertyId}`;
-      const downloadURLs = await imageUploadService.uploadImages(
+      // Upload images to Cloudinary
+      const folder = `ikhaya/properties/${propertyId}`;
+      const downloadURLs = await cloudinaryService.uploadImages(
         images,
-        storagePath,
+        folder,
         images.length
       );
 
@@ -475,7 +475,7 @@ class PropertyService {
       const updatedImages = (property.images || []).filter((url) => url !== imageUrl);
 
       // Delete image from storage
-      await imageUploadService.deleteImage(imageUrl);
+      await cloudinaryService.deleteImage(imageUrl);
 
       // Update property
       await updateDoc(propertyRef, {
