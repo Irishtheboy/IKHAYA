@@ -294,11 +294,7 @@ class MaintenanceService {
 
       // Upload images to Cloudinary
       const folder = `ikhaya/maintenance/${requestId}`;
-      const downloadURLs = await cloudinaryService.uploadImages(
-        images,
-        folder,
-        images.length
-      );
+      const downloadURLs = await cloudinaryService.uploadImages(images, folder, images.length);
 
       // Update maintenance request with new image URLs
       const updatedImages = [...(maintenanceData.images || []), ...downloadURLs];

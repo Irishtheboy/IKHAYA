@@ -15,10 +15,7 @@ interface CreateLandlordFormProps {
   onCancel?: () => void;
 }
 
-export const CreateLandlordForm: React.FC<CreateLandlordFormProps> = ({
-  onSuccess,
-  onCancel,
-}) => {
+export const CreateLandlordForm: React.FC<CreateLandlordFormProps> = ({ onSuccess, onCancel }) => {
   const { userProfile } = useAuth();
   const [formData, setFormData] = useState({
     name: '',

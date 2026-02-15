@@ -14,6 +14,7 @@ const PropertiesManage: React.FC = () => {
 
   useEffect(() => {
     loadProperties();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
   const loadProperties = async () => {

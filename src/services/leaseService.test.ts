@@ -301,7 +301,7 @@ describe('LeaseService', () => {
       getDoc.mockResolvedValue(mockLeaseDoc);
       updateDoc.mockResolvedValue(undefined);
 
-      await leaseService.terminateLease('lease-123', 'Early termination');
+      await leaseService.terminateLease('lease-123');
 
       expect(updateDoc).toHaveBeenCalled();
     });

@@ -13,7 +13,6 @@ import { useNavigate } from 'react-router-dom';
  */
 export const MaintenanceManagement: React.FC = () => {
   const { currentUser } = useAuth();
-  const navigate = useNavigate();
   const [requests, setRequests] = useState<MaintenanceRequest[]>([]);
   const [properties, setProperties] = useState<Map<string, Property>>(new Map());
   const [loading, setLoading] = useState(true);

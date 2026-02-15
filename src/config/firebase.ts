@@ -1,7 +1,6 @@
 import { initializeApp, FirebaseApp } from 'firebase/app';
 import { getAuth, Auth, connectAuthEmulator } from 'firebase/auth';
 import {
-  getFirestore,
   Firestore,
   connectFirestoreEmulator,
   initializeFirestore,

@@ -114,9 +114,7 @@ class CloudinaryService {
 
       // Note: Deletion requires API secret and should be done server-side
       // For now, we'll just log a warning
-      console.warn(
-        'Image deletion should be handled server-side with Cloud Functions'
-      );
+      console.warn('Image deletion should be handled server-side with Cloud Functions');
       console.log('Public ID to delete:', publicId);
 
       // TODO: Implement server-side deletion via Cloud Function
@@ -161,9 +159,7 @@ class CloudinaryService {
 
     // Validate file size
     if (file.size > MAX_FILE_SIZE) {
-      throw new Error(
-        `File size exceeds maximum limit of ${MAX_FILE_SIZE / (1024 * 1024)}MB`
-      );
+      throw new Error(`File size exceeds maximum limit of ${MAX_FILE_SIZE / (1024 * 1024)}MB`);
     }
   }
 
@@ -195,12 +191,7 @@ class CloudinaryService {
    * @param quality - Image quality (1-100)
    * @returns Optimized image URL
    */
-  getOptimizedUrl(
-    url: string,
-    width?: number,
-    height?: number,
-    quality: number = 80
-  ): string {
+  getOptimizedUrl(url: string, width?: number, height?: number, quality: number = 80): string {
     try {
       // Extract parts from URL
       const parts = url.split('/upload/');

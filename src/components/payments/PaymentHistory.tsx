@@ -20,6 +20,7 @@ const PaymentHistory: React.FC = () => {
 
   useEffect(() => {
     loadPaymentData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
   const loadPaymentData = async () => {

@@ -28,6 +28,7 @@ const PropertyDetail: React.FC = () => {
     return () => {
       cleanupSEO();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [propertyId]);
 
   useEffect(() => {

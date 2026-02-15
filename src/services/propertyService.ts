@@ -431,11 +431,7 @@ class PropertyService {
 
       // Upload images to Cloudinary
       const folder = `ikhaya/properties/${propertyId}`;
-      const downloadURLs = await cloudinaryService.uploadImages(
-        images,
-        folder,
-        images.length
-      );
+      const downloadURLs = await cloudinaryService.uploadImages(images, folder, images.length);
 
       // Update property with new image URLs
       const updatedImages = [...(property.images || []), ...downloadURLs];

@@ -9,7 +9,6 @@ import {
   orderBy,
   getDocs,
   serverTimestamp,
-  Timestamp,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { Lead, LeadStatus, Message } from '../types/firebase';

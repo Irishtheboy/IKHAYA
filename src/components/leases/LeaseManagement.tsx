@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { leaseService } from '../../services/leaseService';
 import { Lease } from '../../types/firebase';
@@ -19,11 +19,7 @@ const LeaseManagement: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'active' | 'expiring'>('all');
 
-  useEffect(() => {
-    loadLeases();
-  }, [currentUser]);
-
-  const loadLeases = async () => {
+  const loadLeases = useCallback(async () => {
     if (!currentUser || !userProfile) return;
 
     try {
@@ -48,7 +44,11 @@ const LeaseManagement: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentUser, userProfile]);
+
+  useEffect(() => {
+    loadLeases();
+  }, [loadLeases]);
 
   const getDaysUntilExpiration = (endDate: any): number => {
     const end = endDate.toDate();

@@ -37,6 +37,7 @@ const LeadCreate: React.FC = () => {
     }
 
     loadProperty();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [propertyId, currentUser]);
 
   const loadProperty = async () => {

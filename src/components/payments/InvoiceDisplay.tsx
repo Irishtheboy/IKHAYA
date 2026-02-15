@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { paymentService } from '../../services/paymentService';
 import { Invoice, Payment } from '../../types/firebase';
@@ -21,11 +21,7 @@ const InvoiceDisplay: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
 
-  useEffect(() => {
-    loadInvoiceData();
-  }, [invoiceId]);
-
-  const loadInvoiceData = async () => {
+  const loadInvoiceData = useCallback(async () => {
     if (!invoiceId) return;
 
     try {
@@ -58,7 +54,11 @@ const InvoiceDisplay: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [invoiceId, currentUser]);
+
+  useEffect(() => {
+    loadInvoiceData();
+  }, [loadInvoiceData]);
 
   const getTotalPaid = (): number => {
     return payments.reduce((sum, payment) => sum + payment.amount, 0);

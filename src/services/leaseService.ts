@@ -179,11 +179,10 @@ class LeaseService {
    * Terminate a lease agreement
    *
    * @param leaseId - ID of the lease
-   * @param reason - Reason for termination
    * @returns Promise resolving to updated lease
    * @throws Error if termination fails or lease not found
    */
-  async terminateLease(leaseId: string, reason?: string): Promise<Lease> {
+  async terminateLease(leaseId: string): Promise<Lease> {
     try {
       const leaseRef = doc(db, COLLECTIONS.LEASES, leaseId);
 

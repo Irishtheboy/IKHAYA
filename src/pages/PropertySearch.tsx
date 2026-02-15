@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout } from '../components/layout/Layout';
 import { propertyService, SearchCriteria } from '../services/propertyService';
@@ -20,11 +20,7 @@ const PropertySearch: React.FC = () => {
     sortBy: 'date',
   });
 
-  useEffect(() => {
-    handleSearch();
-  }, []);
-
-  const handleSearch = async () => {
+  const handleSearch = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
@@ -45,7 +41,11 @@ const PropertySearch: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [searchCriteria]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [handleSearch]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;

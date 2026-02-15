@@ -31,7 +31,7 @@ export const AdminLandlords: React.FC = () => {
       // Get all users and filter landlords in memory
       const allUsers = await adminService.getAllUsers();
       const landlordUsers = allUsers.filter((user) => user.role === 'landlord');
-      
+
       setAllLandlords(landlordUsers);
     } catch (err: any) {
       setError(err.message || 'Failed to load landlords');
