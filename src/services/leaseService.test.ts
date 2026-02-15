@@ -49,13 +49,13 @@ describe('LeaseService', () => {
   describe('createLease', () => {
     it('should create a new lease with valid data', async () => {
       const { setDoc, doc, collection } = require('firebase/firestore');
-      
+
       // Mock collection to return an object
       collection.mockReturnValue({ _type: 'collection' });
-      
+
       // Mock doc to return a reference with an id
       doc.mockReturnValue(mockDocRef);
-      
+
       // Mock setDoc to resolve successfully
       setDoc.mockResolvedValue(undefined);
 
@@ -91,9 +91,7 @@ describe('LeaseService', () => {
     it('should throw error if tenant ID is missing', async () => {
       const invalidData = { ...mockLeaseData, tenantId: '' };
 
-      await expect(leaseService.createLease(invalidData)).rejects.toThrow(
-        'Tenant ID is required'
-      );
+      await expect(leaseService.createLease(invalidData)).rejects.toThrow('Tenant ID is required');
     });
 
     it('should throw error if rent amount is zero or negative', async () => {

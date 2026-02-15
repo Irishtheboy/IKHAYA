@@ -80,14 +80,20 @@ const PaymentHistory: React.FC = () => {
           <div>
             <h2 className="text-lg font-semibold text-gray-700">Outstanding Balance</h2>
             <p className="text-3xl font-bold text-red-600 mt-2">
-              R{outstandingBalance.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              R
+              {outstandingBalance.toLocaleString('en-ZA', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </p>
           </div>
           {outstandingBalance > 0 && (
             <button
               onClick={() => {
                 // Navigate to payment form or show payment modal
-                const pendingInvoice = invoices.find((inv) => inv.status === 'pending' || inv.status === 'overdue');
+                const pendingInvoice = invoices.find(
+                  (inv) => inv.status === 'pending' || inv.status === 'overdue'
+                );
                 if (pendingInvoice) {
                   window.location.href = `/invoices/${pendingInvoice.id}`;
                 }
@@ -105,7 +111,10 @@ const PaymentHistory: React.FC = () => {
         <div className="bg-white shadow rounded-lg p-6">
           <h3 className="text-sm font-medium text-gray-600">Total Paid</h3>
           <p className="text-2xl font-bold text-green-600 mt-2">
-            R{payments.reduce((sum, p) => sum + p.amount, 0).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            R
+            {payments
+              .reduce((sum, p) => sum + p.amount, 0)
+              .toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </p>
         </div>
         <div className="bg-white shadow rounded-lg p-6">
@@ -156,7 +165,11 @@ const PaymentHistory: React.FC = () => {
                       {payment.paymentDate.toDate().toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-green-600">
-                      R{payment.amount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      R
+                      {payment.amount.toLocaleString('en-ZA', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {getPaymentMethodLabel(payment.paymentMethod)}

@@ -1,9 +1,4 @@
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { imageUploadService } from './imageUploadService';
 
 // Mock Firebase Storage
@@ -30,10 +25,7 @@ describe('ImageUploadService', () => {
       (uploadBytes as jest.Mock).mockResolvedValue({});
       (getDownloadURL as jest.Mock).mockResolvedValue(mockDownloadURL);
 
-      const result = await imageUploadService.uploadImage(
-        mockFile,
-        'properties/test'
-      );
+      const result = await imageUploadService.uploadImage(mockFile, 'properties/test');
 
       expect(result).toBe(mockDownloadURL);
       expect(ref).toHaveBeenCalled();
@@ -46,9 +38,9 @@ describe('ImageUploadService', () => {
         type: 'application/pdf',
       });
 
-      await expect(
-        imageUploadService.uploadImage(mockFile, 'properties/test')
-      ).rejects.toThrow('Invalid file format');
+      await expect(imageUploadService.uploadImage(mockFile, 'properties/test')).rejects.toThrow(
+        'Invalid file format'
+      );
     });
 
     it('should throw error for file size exceeding limit', async () => {
@@ -57,9 +49,9 @@ describe('ImageUploadService', () => {
       });
       Object.defineProperty(mockFile, 'size', { value: 6 * 1024 * 1024 }); // 6MB
 
-      await expect(
-        imageUploadService.uploadImage(mockFile, 'properties/test')
-      ).rejects.toThrow('File size exceeds maximum limit');
+      await expect(imageUploadService.uploadImage(mockFile, 'properties/test')).rejects.toThrow(
+        'File size exceeds maximum limit'
+      );
     });
 
     it('should accept PNG format', async () => {
@@ -74,10 +66,7 @@ describe('ImageUploadService', () => {
       (uploadBytes as jest.Mock).mockResolvedValue({});
       (getDownloadURL as jest.Mock).mockResolvedValue(mockDownloadURL);
 
-      const result = await imageUploadService.uploadImage(
-        mockFile,
-        'properties/test'
-      );
+      const result = await imageUploadService.uploadImage(mockFile, 'properties/test');
 
       expect(result).toBe(mockDownloadURL);
     });
@@ -94,10 +83,7 @@ describe('ImageUploadService', () => {
       (uploadBytes as jest.Mock).mockResolvedValue({});
       (getDownloadURL as jest.Mock).mockResolvedValue(mockDownloadURL);
 
-      const result = await imageUploadService.uploadImage(
-        mockFile,
-        'properties/test'
-      );
+      const result = await imageUploadService.uploadImage(mockFile, 'properties/test');
 
       expect(result).toBe(mockDownloadURL);
     });
@@ -125,10 +111,7 @@ describe('ImageUploadService', () => {
         .mockResolvedValueOnce(mockURLs[0])
         .mockResolvedValueOnce(mockURLs[1]);
 
-      const result = await imageUploadService.uploadImages(
-        mockFiles,
-        'properties/test'
-      );
+      const result = await imageUploadService.uploadImages(mockFiles, 'properties/test');
 
       expect(result).toEqual(mockURLs);
       expect(uploadBytes).toHaveBeenCalledTimes(2);
@@ -137,9 +120,7 @@ describe('ImageUploadService', () => {
     it('should throw error if exceeding max images limit', async () => {
       const mockFiles = Array(6)
         .fill(null)
-        .map(
-          (_, i) => new File(['content'], `test${i}.jpg`, { type: 'image/jpeg' })
-        );
+        .map((_, i) => new File(['content'], `test${i}.jpg`, { type: 'image/jpeg' }));
 
       mockFiles.forEach((file) => {
         Object.defineProperty(file, 'size', { value: 1024 * 1024 }); // 1MB
@@ -160,9 +141,9 @@ describe('ImageUploadService', () => {
         Object.defineProperty(file, 'size', { value: 1024 * 1024 }); // 1MB
       });
 
-      await expect(
-        imageUploadService.uploadImages(mockFiles, 'properties/test')
-      ).rejects.toThrow('Invalid file format');
+      await expect(imageUploadService.uploadImages(mockFiles, 'properties/test')).rejects.toThrow(
+        'Invalid file format'
+      );
 
       // Should not have called upload functions
       expect(uploadBytes).not.toHaveBeenCalled();

@@ -1,9 +1,9 @@
 /**
  * Firestore Collections Structure
- * 
+ *
  * This file defines the complete Firestore database schema for IKHAYA RENT PROPERTIES.
  * It documents all collections, subcollections, and their relationships.
- * 
+ *
  * Collection Structure:
  * - /users/{userId}
  * - /properties/{propertyId}
@@ -61,14 +61,14 @@ export const COLLECTIONS = {
 
 /**
  * Collection: /users/{userId}
- * 
+ *
  * Stores user profile information for landlords, tenants, and admins.
  * The document ID matches the Firebase Auth UID.
- * 
+ *
  * Indexes Required:
  * - role + createdAt (DESC)
  * - email (for lookups)
- * 
+ *
  * Security Rules:
  * - Read: Any authenticated user
  * - Create: Owner only (matching auth UID)
@@ -81,16 +81,16 @@ export interface UsersCollection {
 
 /**
  * Collection: /properties/{propertyId}
- * 
+ *
  * Stores property listings created by landlords.
  * Properties can be searched by location, price, type, etc.
- * 
+ *
  * Indexes Required:
  * - landlordId + status + createdAt (DESC)
  * - city + status + rentAmount (ASC)
  * - status + isPremium (DESC) + createdAt (DESC)
  * - propertyType + status + rentAmount (ASC)
- * 
+ *
  * Security Rules:
  * - Read: Public (anyone can view listings)
  * - Create: Landlords only
@@ -103,15 +103,15 @@ export interface PropertiesCollection {
 
 /**
  * Collection: /leads/{leadId}
- * 
+ *
  * Stores tenant inquiries about properties.
  * Each lead represents a tenant's interest in a specific property.
- * 
+ *
  * Indexes Required:
  * - tenantId + status + createdAt (DESC)
  * - propertyId + status + createdAt (DESC)
  * - landlordId + status + createdAt (DESC)
- * 
+ *
  * Security Rules:
  * - Read: Tenant or landlord involved in the lead
  * - Create: Tenants only
@@ -123,14 +123,14 @@ export interface LeadsCollection {
 
 /**
  * Subcollection: /leads/{leadId}/messages/{messageId}
- * 
+ *
  * Stores messages exchanged between tenant and landlord for a specific lead.
  * Messages are organized as a subcollection under each lead.
- * 
+ *
  * Indexes Required:
  * - createdAt (ASC) - for chronological message display
  * - read + createdAt (ASC) - for unread message queries
- * 
+ *
  * Security Rules:
  * - Read: Tenant or landlord involved in the parent lead
  * - Create: Tenant or landlord involved in the parent lead
@@ -142,16 +142,16 @@ export interface MessagesSubcollection {
 
 /**
  * Collection: /leases/{leaseId}
- * 
+ *
  * Stores lease agreements between landlords and tenants.
  * Tracks signatures, terms, and lease status.
- * 
+ *
  * Indexes Required:
  * - landlordId + status + endDate (ASC)
  * - tenantId + status + endDate (ASC)
  * - propertyId + status + startDate (DESC)
  * - status + endDate (ASC) - for expiring lease queries
- * 
+ *
  * Security Rules:
  * - Read: Landlord or tenant involved in the lease
  * - Create: Landlords only
@@ -163,16 +163,16 @@ export interface LeasesCollection {
 
 /**
  * Collection: /maintenance/{requestId}
- * 
+ *
  * Stores maintenance requests submitted by tenants.
  * Tracks issue category, priority, status, and resolution notes.
- * 
+ *
  * Indexes Required:
  * - propertyId + status + priority (DESC)
  * - landlordId + status + createdAt (DESC)
  * - tenantId + createdAt (DESC)
  * - status + priority (DESC) + createdAt (DESC)
- * 
+ *
  * Security Rules:
  * - Read: Tenant or landlord involved
  * - Create: Tenants only
@@ -184,14 +184,14 @@ export interface MaintenanceCollection {
 
 /**
  * Collection: /invoices/{invoiceId}
- * 
+ *
  * Stores commission invoices generated for landlords.
  * Invoices are created monthly based on active leases.
- * 
+ *
  * Indexes Required:
  * - landlordId + status + dueDate (ASC)
  * - status + dueDate (ASC) - for overdue invoice queries
- * 
+ *
  * Security Rules:
  * - Read: Owner landlord or admin
  * - Create: Admin only (via Cloud Functions)
@@ -203,15 +203,15 @@ export interface InvoicesCollection {
 
 /**
  * Collection: /payments/{paymentId}
- * 
+ *
  * Stores payment records for commission invoices.
  * Links to invoices and tracks payment method and reference.
- * 
+ *
  * Indexes Required:
  * - invoiceId + createdAt (DESC)
  * - landlordId + createdAt (DESC)
  * - paymentDate (DESC)
- * 
+ *
  * Security Rules:
  * - Read: Owner landlord or admin
  * - Create: Landlord or admin
@@ -223,14 +223,14 @@ export interface PaymentsCollection {
 
 /**
  * Collection: /campaigns/{campaignId}
- * 
+ *
  * Stores marketing campaigns for property promotion.
  * Tracks social media platforms, metrics, and campaign status.
- * 
+ *
  * Indexes Required:
  * - status + startDate (DESC)
  * - createdAt (DESC)
- * 
+ *
  * Security Rules:
  * - Read: Admin only
  * - Create: Admin only
@@ -242,14 +242,14 @@ export interface CampaignsCollection {
 
 /**
  * Collection: /notifications/{notificationId}
- * 
+ *
  * Stores in-app notifications for users.
  * Notifications are created by Cloud Functions for various events.
- * 
+ *
  * Indexes Required:
  * - userId + read + createdAt (DESC)
  * - userId + type + read + createdAt (DESC)
- * 
+ *
  * Security Rules:
  * - Read: Owner user only
  * - Create: System (Cloud Functions)
@@ -262,13 +262,13 @@ export interface NotificationsCollection {
 
 /**
  * Collection: /userPreferences/{userId}
- * 
+ *
  * Stores user notification preferences and settings.
  * Document ID matches the user's UID.
- * 
+ *
  * Indexes Required:
  * - None (direct document access by userId)
- * 
+ *
  * Security Rules:
  * - Read: Owner user only
  * - Create: Owner user only
@@ -280,13 +280,13 @@ export interface UserPreferencesCollection {
 
 /**
  * Subcollection: /users/{userId}/savedProperties/{propertyId}
- * 
+ *
  * Stores properties saved/bookmarked by a user.
  * Organized as a subcollection under each user.
- * 
+ *
  * Indexes Required:
  * - savedAt (DESC)
- * 
+ *
  * Security Rules:
  * - Read: Owner user only
  * - Create: Owner user only
@@ -298,14 +298,14 @@ export interface SavedPropertiesSubcollection {
 
 /**
  * Collection: /propertyViews/{viewId}
- * 
+ *
  * Stores analytics data for property views.
  * Used for tracking property popularity and generating metrics.
- * 
+ *
  * Indexes Required:
  * - propertyId + viewedAt (DESC)
  * - userId + viewedAt (DESC)
- * 
+ *
  * Security Rules:
  * - Read: Admin only
  * - Create: Anyone (including anonymous)
@@ -318,14 +318,14 @@ export interface PropertyViewsCollection {
 
 /**
  * Collection: /subscriptions/{subscriptionId}
- * 
+ *
  * Stores premium subscription information for landlords.
  * Tracks subscription tier, status, and renewal dates.
- * 
+ *
  * Indexes Required:
  * - landlordId + status + endDate (ASC)
  * - status + endDate (ASC) - for expiring subscription queries
- * 
+ *
  * Security Rules:
  * - Read: Owner landlord or admin
  * - Create: Owner landlord or admin

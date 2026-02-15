@@ -55,7 +55,7 @@ export const AdminDashboard: React.FC = () => {
     try {
       setProcessingId(landlordId);
       await adminService.approveLandlord(landlordId, userProfile.id);
-      
+
       // Refresh data
       await loadDashboardData();
     } catch (err: any) {
@@ -66,6 +66,7 @@ export const AdminDashboard: React.FC = () => {
   };
 
   const handleRejectLandlord = async (landlordId: string) => {
+    // eslint-disable-next-line no-restricted-globals
     if (!confirm('Are you sure you want to reject this landlord registration?')) {
       return;
     }
@@ -73,7 +74,7 @@ export const AdminDashboard: React.FC = () => {
     try {
       setProcessingId(landlordId);
       await adminService.rejectLandlord(landlordId);
-      
+
       // Refresh data
       await loadDashboardData();
     } catch (err: any) {
@@ -85,16 +86,14 @@ export const AdminDashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center py-12">
         <div className="text-xl">Loading admin dashboard...</div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
-
+    <div>
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
           {error}

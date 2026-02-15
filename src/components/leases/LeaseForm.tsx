@@ -16,7 +16,10 @@ interface LeaseFormProps {
  *
  * Requirements: 5.1, 5.2 - Lease Agreement Management
  */
-const LeaseForm: React.FC<LeaseFormProps> = ({ propertyId: initialPropertyId, tenantId: initialTenantId }) => {
+const LeaseForm: React.FC<LeaseFormProps> = ({
+  propertyId: initialPropertyId,
+  tenantId: initialTenantId,
+}) => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
 
@@ -52,7 +55,9 @@ const LeaseForm: React.FC<LeaseFormProps> = ({ propertyId: initialPropertyId, te
     loadProperties();
   }, [currentUser]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,

@@ -14,10 +14,10 @@ const SitemapGenerator: React.FC = () => {
 
       // Fetch all available properties
       const result = await propertyService.searchProperties({ sortBy: 'date' });
-      
+
       // Generate and download sitemap
       downloadSitemap(result.properties);
-      
+
       setMessage(`Sitemap generated successfully with ${result.properties.length} properties!`);
     } catch (error: any) {
       setMessage(`Error generating sitemap: ${error.message}`);
@@ -31,10 +31,11 @@ const SitemapGenerator: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white shadow rounded-lg p-6">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Sitemap Generator</h1>
-          
+
           <p className="text-gray-600 mb-6">
-            Generate an XML sitemap for all active property listings. This sitemap can be submitted to search engines
-            to improve SEO and help search engines discover your property listings.
+            Generate an XML sitemap for all active property listings. This sitemap can be submitted
+            to search engines to improve SEO and help search engines discover your property
+            listings.
           </p>
 
           <button
@@ -46,7 +47,9 @@ const SitemapGenerator: React.FC = () => {
           </button>
 
           {message && (
-            <div className={`mt-4 p-4 rounded-md ${message.includes('Error') ? 'bg-red-50 text-red-800' : 'bg-green-50 text-green-800'}`}>
+            <div
+              className={`mt-4 p-4 rounded-md ${message.includes('Error') ? 'bg-red-50 text-red-800' : 'bg-green-50 text-green-800'}`}
+            >
               {message}
             </div>
           )}

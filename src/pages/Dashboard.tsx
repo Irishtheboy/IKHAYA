@@ -45,9 +45,9 @@ const Dashboard: React.FC = () => {
                 Account Pending Approval
               </h2>
               <p className="text-yellow-700">
-                Your landlord account is currently pending admin approval. You will be able to
-                post properties and use the platform once your account has been approved. You
-                will receive an email notification when this happens.
+                Your landlord account is currently pending admin approval. You will be able to post
+                properties and use the platform once your account has been approved. You will
+                receive an email notification when this happens.
               </p>
             </div>
           );

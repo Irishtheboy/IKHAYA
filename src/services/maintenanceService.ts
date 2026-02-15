@@ -46,9 +46,7 @@ class MaintenanceService {
    * @returns Promise resolving to the created maintenance request
    * @throws Error if creation fails
    */
-  async createMaintenanceRequest(
-    requestData: MaintenanceRequestDTO
-  ): Promise<MaintenanceRequest> {
+  async createMaintenanceRequest(requestData: MaintenanceRequestDTO): Promise<MaintenanceRequest> {
     try {
       // Validate request data
       this.validateMaintenanceRequestData(requestData);

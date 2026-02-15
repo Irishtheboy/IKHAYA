@@ -3,7 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Layout } from '../components/layout/Layout';
 import { propertyService } from '../services/propertyService';
 import { Property } from '../types/firebase';
-import { updateMetaTags, generatePropertySchema, addStructuredData, cleanupSEO } from '../utils/seo';
+import {
+  updateMetaTags,
+  generatePropertySchema,
+  addStructuredData,
+  cleanupSEO,
+} from '../utils/seo';
 import { useAuth } from '../contexts/AuthContext';
 
 const PropertyDetail: React.FC = () => {
@@ -18,7 +23,7 @@ const PropertyDetail: React.FC = () => {
 
   useEffect(() => {
     loadProperty();
-    
+
     // Cleanup SEO elements when component unmounts
     return () => {
       cleanupSEO();
@@ -45,7 +50,7 @@ const PropertyDetail: React.FC = () => {
       setIsLoading(true);
       setError(null);
       const data = await propertyService.getProperty(propertyId);
-      
+
       if (!data) {
         setError('Property not found');
       } else {
@@ -110,7 +115,9 @@ const PropertyDetail: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Property Not Found</h2>
-            <p className="text-gray-600 mb-4">{error || 'The property you are looking for does not exist.'}</p>
+            <p className="text-gray-600 mb-4">
+              {error || 'The property you are looking for does not exist.'}
+            </p>
             <button
               onClick={() => navigate('/search')}
               className="px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
@@ -131,12 +138,7 @@ const PropertyDetail: React.FC = () => {
           onClick={() => navigate(-1)}
           className="mb-4 flex items-center text-gray-600 hover:text-gray-900"
         >
-          <svg
-            className="h-5 w-5 mr-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
+          <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -251,7 +253,8 @@ const PropertyDetail: React.FC = () => {
               {/* Main Content */}
               <div className="lg:col-span-2">
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                  {property.propertyType.charAt(0).toUpperCase() + property.propertyType.slice(1)} for Rent
+                  {property.propertyType.charAt(0).toUpperCase() + property.propertyType.slice(1)}{' '}
+                  for Rent
                 </h1>
                 <p className="text-xl text-gray-600 mb-4">{property.address}</p>
                 <p className="text-lg text-gray-500 mb-6">
@@ -397,30 +400,40 @@ const PropertyDetail: React.FC = () => {
                     className="text-gray-400 hover:text-gray-600"
                   >
                     <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
                 </div>
-                
+
                 <p className="text-gray-600 mb-6">
-                  To express interest in this property or contact the landlord, you need to sign in or create an account.
+                  To express interest in this property or contact the landlord, you need to sign in
+                  or create an account.
                 </p>
 
                 <div className="space-y-3">
                   <button
-                    onClick={() => navigate('/login', { state: { from: window.location.pathname } })}
+                    onClick={() =>
+                      navigate('/login', { state: { from: window.location.pathname } })
+                    }
                     className="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 font-medium"
                   >
                     Sign In
                   </button>
-                  
+
                   <button
-                    onClick={() => navigate('/register', { state: { from: window.location.pathname } })}
+                    onClick={() =>
+                      navigate('/register', { state: { from: window.location.pathname } })
+                    }
                     className="w-full border border-blue-600 text-blue-600 px-6 py-3 rounded-md hover:bg-blue-50 font-medium"
                   >
                     Create Account
                   </button>
-                  
+
                   <button
                     onClick={() => setShowAuthPrompt(false)}
                     className="w-full text-gray-600 px-6 py-3 rounded-md hover:bg-gray-100 font-medium"

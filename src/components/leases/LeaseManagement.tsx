@@ -82,7 +82,9 @@ const LeaseManagement: React.FC = () => {
 
   const getStatusBadge = (lease: Lease) => {
     if (isExpired(lease)) {
-      return <span className="px-2 py-1 bg-red-200 text-red-800 text-xs rounded-full">EXPIRED</span>;
+      return (
+        <span className="px-2 py-1 bg-red-200 text-red-800 text-xs rounded-full">EXPIRED</span>
+      );
     }
 
     if (isExpiringSoon(lease)) {
@@ -103,7 +105,9 @@ const LeaseManagement: React.FC = () => {
     };
 
     return (
-      <span className={`px-2 py-1 text-xs rounded-full ${statusColors[lease.status] || 'bg-gray-200 text-gray-800'}`}>
+      <span
+        className={`px-2 py-1 text-xs rounded-full ${statusColors[lease.status] || 'bg-gray-200 text-gray-800'}`}
+      >
         {lease.status.replace('_', ' ').toUpperCase()}
       </span>
     );
@@ -249,7 +253,8 @@ const LeaseManagement: React.FC = () => {
               {isExpiringSoon(lease) && (
                 <div className="bg-yellow-50 border border-yellow-200 rounded p-3">
                   <p className="text-sm text-yellow-800">
-                    ⚠️ This lease expires in {getDaysUntilExpiration(lease.endDate)} days. Please take action.
+                    ⚠️ This lease expires in {getDaysUntilExpiration(lease.endDate)} days. Please
+                    take action.
                   </p>
                 </div>
               )}

@@ -56,7 +56,10 @@ export const generatePropertySchema = (property: Property, propertyId: string): 
       '@type': 'Offer',
       price: property.rentAmount,
       priceCurrency: 'ZAR',
-      availability: property.status === 'available' ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      availability:
+        property.status === 'available'
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
       validFrom: property.availableFrom,
     },
     numberOfRooms: property.bedrooms,
@@ -65,10 +68,11 @@ export const generatePropertySchema = (property: Property, propertyId: string): 
       '@type': 'QuantitativeValue',
       // Note: Would need to add square footage to property data
     },
-    amenityFeature: property.amenities?.map((amenity) => ({
-      '@type': 'LocationFeatureSpecification',
-      name: amenity,
-    })) || [],
+    amenityFeature:
+      property.amenities?.map((amenity) => ({
+        '@type': 'LocationFeatureSpecification',
+        name: amenity,
+      })) || [],
     image: property.images || [],
     datePosted: property.createdAt,
   };
@@ -79,7 +83,8 @@ export const generatePropertySchema = (property: Property, propertyId: string): 
  */
 export const updateMetaTags = (property: Property, propertyId: string): void => {
   const title = `${property.propertyType.charAt(0).toUpperCase() + property.propertyType.slice(1)} for Rent in ${property.city} - R${property.rentAmount.toLocaleString()}/month`;
-  const description = property.description.substring(0, 160) + (property.description.length > 160 ? '...' : '');
+  const description =
+    property.description.substring(0, 160) + (property.description.length > 160 ? '...' : '');
   const imageUrl = property.images?.[0] || '';
   const propertyUrl = `${window.location.origin}${generatePropertyUrl(propertyId, property)}`;
 
@@ -88,7 +93,10 @@ export const updateMetaTags = (property: Property, propertyId: string): void => 
 
   // Update or create meta tags
   updateMetaTag('description', description);
-  updateMetaTag('keywords', `${property.propertyType}, rent, ${property.city}, ${property.province}, ${property.bedrooms} bedroom, property rental`);
+  updateMetaTag(
+    'keywords',
+    `${property.propertyType}, rent, ${property.city}, ${property.province}, ${property.bedrooms} bedroom, property rental`
+  );
 
   // Open Graph tags for social media
   updateMetaTag('og:title', title, 'property');
@@ -107,15 +115,19 @@ export const updateMetaTags = (property: Property, propertyId: string): void => 
 /**
  * Helper function to update or create a meta tag
  */
-const updateMetaTag = (name: string, content: string, attributeName: 'name' | 'property' = 'name'): void => {
+const updateMetaTag = (
+  name: string,
+  content: string,
+  attributeName: 'name' | 'property' = 'name'
+): void => {
   let element = document.querySelector(`meta[${attributeName}="${name}"]`);
-  
+
   if (!element) {
     element = document.createElement('meta');
     element.setAttribute(attributeName, name);
     document.head.appendChild(element);
   }
-  
+
   element.setAttribute('content', content);
 };
 

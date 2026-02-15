@@ -9,7 +9,7 @@
  */
 export const generateSrcSet = (imageUrl: string): string => {
   if (!imageUrl) return '';
-  
+
   // For Firebase Storage URLs, we can add size parameters
   // For other URLs, return as-is
   if (imageUrl.includes('firebasestorage.googleapis.com')) {
@@ -19,7 +19,7 @@ export const generateSrcSet = (imageUrl: string): string => {
       ${imageUrl}&w=1200 1200w
     `.trim();
   }
-  
+
   return imageUrl;
 };
 
@@ -40,16 +40,19 @@ export const isMobileDevice = (): boolean => {
 /**
  * Get optimized image URL based on device type
  */
-export const getOptimizedImageUrl = (imageUrl: string, isMobile: boolean = isMobileDevice()): string => {
+export const getOptimizedImageUrl = (
+  imageUrl: string,
+  isMobile: boolean = isMobileDevice()
+): string => {
   if (!imageUrl) return '';
-  
+
   // For Firebase Storage URLs, add size parameter
   if (imageUrl.includes('firebasestorage.googleapis.com')) {
     const size = isMobile ? 'w=800' : 'w=1200';
     const separator = imageUrl.includes('?') ? '&' : '?';
     return `${imageUrl}${separator}${size}`;
   }
-  
+
   return imageUrl;
 };
 
@@ -75,7 +78,7 @@ export const setupLazyLoading = (): void => {
         if (entry.isIntersecting) {
           const img = entry.target as HTMLImageElement;
           const src = img.dataset.src;
-          
+
           if (src) {
             img.src = src;
             img.removeAttribute('data-src');

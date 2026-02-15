@@ -1,10 +1,4 @@
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-  StorageReference,
-} from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, deleteObject, StorageReference } from 'firebase/storage';
 import { storage } from '../config/firebase';
 
 /**
@@ -64,11 +58,7 @@ class ImageUploadService {
    * @returns Promise resolving to array of download URLs
    * @throws Error if validation fails or upload fails
    */
-  async uploadImages(
-    files: File[],
-    path: string,
-    maxImages: number = 5
-  ): Promise<string[]> {
+  async uploadImages(files: File[], path: string, maxImages: number = 5): Promise<string[]> {
     try {
       // Validate number of images
       if (files.length > maxImages) {
@@ -144,16 +134,12 @@ class ImageUploadService {
 
     // Validate file format
     if (!ALLOWED_FORMATS.includes(file.type)) {
-      throw new Error(
-        'Invalid file format. Only JPEG and PNG images are allowed'
-      );
+      throw new Error('Invalid file format. Only JPEG and PNG images are allowed');
     }
 
     // Validate file size
     if (file.size > MAX_FILE_SIZE) {
-      throw new Error(
-        `File size exceeds maximum limit of ${MAX_FILE_SIZE / (1024 * 1024)}MB`
-      );
+      throw new Error(`File size exceeds maximum limit of ${MAX_FILE_SIZE / (1024 * 1024)}MB`);
     }
   }
 

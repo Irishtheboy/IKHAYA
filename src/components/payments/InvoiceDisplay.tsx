@@ -77,7 +77,9 @@ const InvoiceDisplay: React.FC = () => {
     };
 
     return (
-      <span className={`px-3 py-1 text-sm font-semibold rounded-full ${statusColors[status] || 'bg-gray-200 text-gray-800'}`}>
+      <span
+        className={`px-3 py-1 text-sm font-semibold rounded-full ${statusColors[status] || 'bg-gray-200 text-gray-800'}`}
+      >
         {status.toUpperCase()}
       </span>
     );
@@ -184,7 +186,11 @@ const InvoiceDisplay: React.FC = () => {
                 <tr key={index} className="border-b">
                   <td className="py-3 text-sm">{item.description}</td>
                   <td className="py-3 text-sm text-right">
-                    R{item.amount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    R
+                    {item.amount.toLocaleString('en-ZA', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </td>
                 </tr>
               ))}
@@ -197,7 +203,11 @@ const InvoiceDisplay: React.FC = () => {
           <div className="flex justify-between items-center mb-2">
             <span className="text-lg font-semibold">Total Amount:</span>
             <span className="text-2xl font-bold">
-              R{invoice.amount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              R
+              {invoice.amount.toLocaleString('en-ZA', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </span>
           </div>
           {payments.length > 0 && (
@@ -205,13 +215,21 @@ const InvoiceDisplay: React.FC = () => {
               <div className="flex justify-between items-center mb-2 text-green-600">
                 <span className="text-sm">Total Paid:</span>
                 <span className="text-lg font-semibold">
-                  -R{getTotalPaid().toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  -R
+                  {getTotalPaid().toLocaleString('en-ZA', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
                 </span>
               </div>
               <div className="flex justify-between items-center text-red-600">
                 <span className="text-lg font-semibold">Remaining Balance:</span>
                 <span className="text-2xl font-bold">
-                  R{remainingBalance.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  R
+                  {remainingBalance.toLocaleString('en-ZA', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
                 </span>
               </div>
             </>
@@ -240,7 +258,11 @@ const InvoiceDisplay: React.FC = () => {
               <div key={payment.id} className="flex justify-between items-center border-b pb-3">
                 <div>
                   <p className="font-semibold">
-                    R{payment.amount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    R
+                    {payment.amount.toLocaleString('en-ZA', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </p>
                   <p className="text-sm text-gray-600">
                     {payment.paymentDate.toDate().toLocaleDateString()} - {payment.paymentMethod}

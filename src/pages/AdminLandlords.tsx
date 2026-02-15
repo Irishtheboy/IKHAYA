@@ -8,7 +8,7 @@ import { User } from '../types/firebase';
 export const AdminLandlords: React.FC = () => {
   const { userProfile } = useAuth();
   const navigate = useNavigate();
-  const [landlords, setLandlords] = useState<User[]>([]);
+  const [allLandlords, setAllLandlords] = useState<User[]>([]);
   const [filter, setFilter] = useState<'all' | 'approved' | 'pending'>('all');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -21,28 +21,18 @@ export const AdminLandlords: React.FC = () => {
     }
 
     loadLandlords();
-  }, [userProfile, navigate, filter]);
+  }, [userProfile, navigate]);
 
   const loadLandlords = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      let data: User[];
-      if (filter === 'approved') {
-        data = await adminService.getApprovedLandlords();
-      } else if (filter === 'pending') {
-        data = await adminService.getPendingLandlords();
-      } else {
-        // Get all landlords
-        const [approved, pending] = await Promise.all([
-          adminService.getApprovedLandlords(),
-          adminService.getPendingLandlords(),
-        ]);
-        data = [...pending, ...approved];
-      }
-
-      setLandlords(data);
+      // Get all users and filter landlords in memory
+      const allUsers = await adminService.getAllUsers();
+      const landlordUsers = allUsers.filter((user) => user.role === 'landlord');
+      
+      setAllLandlords(landlordUsers);
     } catch (err: any) {
       setError(err.message || 'Failed to load landlords');
     } finally {
@@ -65,7 +55,8 @@ export const AdminLandlords: React.FC = () => {
   };
 
   const handleRevokeLandlord = async (landlordId: string) => {
-    if (!confirm('Are you sure you want to revoke this landlord\'s approval?')) {
+    // eslint-disable-next-line no-restricted-globals
+    if (!confirm("Are you sure you want to revoke this landlord's approval?")) {
       return;
     }
 
@@ -79,6 +70,13 @@ export const AdminLandlords: React.FC = () => {
       setProcessingId(null);
     }
   };
+
+  // Filter landlords based on selected filter
+  const filteredLandlords = allLandlords.filter((landlord) => {
+    if (filter === 'approved') return landlord.approved === true;
+    if (filter === 'pending') return landlord.approved === false;
+    return true; // 'all'
+  });
 
   return (
     <Layout>
@@ -136,7 +134,7 @@ export const AdminLandlords: React.FC = () => {
             <div className="text-center py-12">
               <p className="text-gray-500">Loading landlords...</p>
             </div>
-          ) : landlords.length === 0 ? (
+          ) : filteredLandlords.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-gray-500">No landlords found</p>
             </div>
@@ -166,7 +164,7 @@ export const AdminLandlords: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {landlords.map((landlord) => (
+                  {filteredLandlords.map((landlord) => (
                     <tr key={landlord.id}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">{landlord.name}</div>

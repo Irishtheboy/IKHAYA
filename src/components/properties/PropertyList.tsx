@@ -62,7 +62,9 @@ const PropertyList: React.FC<PropertyListProps> = ({
           />
         </svg>
         <h3 className="mt-2 text-sm font-medium text-gray-900">No properties</h3>
-        <p className="mt-1 text-sm text-gray-500">Get started by creating a new property listing.</p>
+        <p className="mt-1 text-sm text-gray-500">
+          Get started by creating a new property listing.
+        </p>
         <div className="mt-6">
           <Link
             to="/properties/create"
@@ -133,7 +135,9 @@ const PropertyList: React.FC<PropertyListProps> = ({
               <h3 className="text-lg font-semibold text-gray-900 truncate">
                 {property.propertyType.charAt(0).toUpperCase() + property.propertyType.slice(1)}
               </h3>
-              <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(property.status)}`}>
+              <span
+                className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(property.status)}`}
+              >
                 {property.status}
               </span>
             </div>

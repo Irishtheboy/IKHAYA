@@ -63,12 +63,10 @@ export const MaintenanceManagement: React.FC = () => {
 
     try {
       await maintenanceService.updateRequestStatus(requestId, newStatus);
-      
+
       // Update local state
       setRequests((prevRequests) =>
-        prevRequests.map((req) =>
-          req.id === requestId ? { ...req, status: newStatus } : req
-        )
+        prevRequests.map((req) => (req.id === requestId ? { ...req, status: newStatus } : req))
       );
     } catch (err: any) {
       setError(err.message || 'Failed to update request status');
@@ -77,9 +75,8 @@ export const MaintenanceManagement: React.FC = () => {
     }
   };
 
-  const filteredRequests = filterStatus === 'all'
-    ? requests
-    : requests.filter((req) => req.status === filterStatus);
+  const filteredRequests =
+    filterStatus === 'all' ? requests : requests.filter((req) => req.status === filterStatus);
 
   const getStatusBadgeColor = (status: MaintenanceStatus) => {
     switch (status) {
@@ -197,9 +194,7 @@ export const MaintenanceManagement: React.FC = () => {
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <h3 className="text-xl font-semibold">
-                        {property?.address || 'Property'}
-                      </h3>
+                      <h3 className="text-xl font-semibold">{property?.address || 'Property'}</h3>
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-medium uppercase ${getPriorityBadgeColor(
                           request.priority
@@ -211,9 +206,7 @@ export const MaintenanceManagement: React.FC = () => {
                     <p className="text-gray-600 text-sm mb-1">
                       Category: <span className="capitalize">{request.category}</span>
                     </p>
-                    <p className="text-gray-600 text-sm">
-                      {formatDate(request.createdAt)}
-                    </p>
+                    <p className="text-gray-600 text-sm">{formatDate(request.createdAt)}</p>
                   </div>
                   <span
                     className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusBadgeColor(
@@ -251,9 +244,7 @@ export const MaintenanceManagement: React.FC = () => {
                       {request.notes.map((note, index) => (
                         <div key={index} className="text-sm text-gray-600">
                           <p>{note.note}</p>
-                          <p className="text-xs text-gray-500 mt-1">
-                            {formatDate(note.createdAt)}
-                          </p>
+                          <p className="text-xs text-gray-500 mt-1">{formatDate(note.createdAt)}</p>
                         </div>
                       ))}
                     </div>
@@ -263,7 +254,9 @@ export const MaintenanceManagement: React.FC = () => {
                 <div className="flex gap-3">
                   <select
                     value={request.status}
-                    onChange={(e) => handleStatusChange(request.id, e.target.value as MaintenanceStatus)}
+                    onChange={(e) =>
+                      handleStatusChange(request.id, e.target.value as MaintenanceStatus)
+                    }
                     disabled={updatingStatus === request.id}
                     className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
                   >

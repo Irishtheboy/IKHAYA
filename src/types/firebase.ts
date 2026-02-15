@@ -14,6 +14,7 @@ export interface User {
   approved?: boolean; // For landlords - requires admin approval before they can use the platform
   approvedBy?: string; // Admin user ID who approved the landlord
   approvedAt?: Timestamp; // When the landlord was approved
+  disabled?: boolean; // Account can be disabled by admin
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }

@@ -25,9 +25,7 @@ const PaymentRecordForm: React.FC = () => {
   const [amount, setAmount] = useState<string>('');
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('bank_transfer');
   const [reference, setReference] = useState<string>('');
-  const [paymentDate, setPaymentDate] = useState<string>(
-    new Date().toISOString().split('T')[0]
-  );
+  const [paymentDate, setPaymentDate] = useState<string>(new Date().toISOString().split('T')[0]);
 
   useEffect(() => {
     loadInvoice();
@@ -176,7 +174,11 @@ const PaymentRecordForm: React.FC = () => {
             <div className="flex justify-between items-center mb-2">
               <span className="text-sm text-gray-600">Invoice Amount:</span>
               <span className="font-semibold">
-                R{invoice.amount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                R
+                {invoice.amount.toLocaleString('en-ZA', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </span>
             </div>
             <div className="flex justify-between items-center">
@@ -214,7 +216,11 @@ const PaymentRecordForm: React.FC = () => {
               />
             </div>
             <p className="text-xs text-gray-500 mt-1">
-              Maximum: R{invoice?.amount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              Maximum: R
+              {invoice?.amount.toLocaleString('en-ZA', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </p>
           </div>
 
@@ -293,7 +299,8 @@ const PaymentRecordForm: React.FC = () => {
         <div className="mt-6 p-4 bg-blue-50 rounded-lg">
           <p className="text-sm text-blue-800">
             <strong>Note:</strong> This form is for recording payments that have already been made.
-            Please ensure you have completed the actual payment transaction before recording it here.
+            Please ensure you have completed the actual payment transaction before recording it
+            here.
           </p>
         </div>
       </div>

@@ -97,9 +97,7 @@ describe('LeadService', () => {
         initialMessage: '',
       };
 
-      await expect(leadService.createLead(leadData)).rejects.toThrow(
-        'Initial message is required'
-      );
+      await expect(leadService.createLead(leadData)).rejects.toThrow('Initial message is required');
     });
 
     it('should throw error if initial message exceeds 1000 characters', async () => {

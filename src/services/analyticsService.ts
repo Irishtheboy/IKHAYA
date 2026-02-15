@@ -1,10 +1,4 @@
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  Timestamp,
-} from 'firebase/firestore';
+import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { Property, Lead, Lease, MaintenanceRequest } from '../types/firebase';
 import { COLLECTIONS } from '../types/firestore-schema';
@@ -163,9 +157,8 @@ class AnalyticsService {
 
     // Count leads for each day
     leads.forEach((lead) => {
-      const leadDate = lead.createdAt instanceof Timestamp 
-        ? lead.createdAt.toDate() 
-        : new Date(lead.createdAt);
+      const leadDate =
+        lead.createdAt instanceof Timestamp ? lead.createdAt.toDate() : new Date(lead.createdAt);
       leadDate.setHours(0, 0, 0, 0);
 
       const trendPoint = trends.find((t) => t.date.getTime() === leadDate.getTime());
@@ -251,9 +244,7 @@ class AnalyticsService {
    * @param tenantId - ID of the tenant
    * @returns Promise resolving to array of maintenance requests
    */
-  private async getMaintenanceRequestsForTenant(
-    tenantId: string
-  ): Promise<MaintenanceRequest[]> {
+  private async getMaintenanceRequestsForTenant(tenantId: string): Promise<MaintenanceRequest[]> {
     try {
       const maintenanceQuery = query(
         collection(db, COLLECTIONS.MAINTENANCE),

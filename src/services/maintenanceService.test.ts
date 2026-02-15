@@ -22,7 +22,7 @@ jest.mock('firebase/firestore', () => {
     // Handle doc(db, collectionName) - auto-generated ID
     return { id: `mock-maintenance-${++docIdCounter}` };
   });
-  
+
   return {
     collection: jest.fn(() => ({})),
     doc: mockDoc,
@@ -505,7 +505,13 @@ describe('MaintenanceService', () => {
           id: 'request-123',
           data: () => ({
             ...mockRequest,
-            notes: [{ userId: 'landlord-123', note: 'Scheduled for tomorrow', createdAt: Timestamp.now() }],
+            notes: [
+              {
+                userId: 'landlord-123',
+                note: 'Scheduled for tomorrow',
+                createdAt: Timestamp.now(),
+              },
+            ],
           }),
         });
 
@@ -544,9 +550,9 @@ describe('MaintenanceService', () => {
         data: () => mockRequest,
       });
 
-      await expect(
-        maintenanceService.addNote('request-123', 'landlord-123', '')
-      ).rejects.toThrow('Note text is required');
+      await expect(maintenanceService.addNote('request-123', 'landlord-123', '')).rejects.toThrow(
+        'Note text is required'
+      );
     });
   });
 });

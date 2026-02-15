@@ -79,9 +79,9 @@ describe('PropertyService', () => {
         availableFrom: new Date(),
       };
 
-      await expect(
-        propertyService.createProperty(landlordId, invalidData)
-      ).rejects.toThrow('Address is required');
+      await expect(propertyService.createProperty(landlordId, invalidData)).rejects.toThrow(
+        'Address is required'
+      );
     });
 
     it('should throw error for negative rent amount', async () => {
@@ -100,9 +100,9 @@ describe('PropertyService', () => {
         availableFrom: new Date(),
       };
 
-      await expect(
-        propertyService.createProperty(landlordId, invalidData)
-      ).rejects.toThrow('Rent amount must be greater than zero');
+      await expect(propertyService.createProperty(landlordId, invalidData)).rejects.toThrow(
+        'Rent amount must be greater than zero'
+      );
     });
 
     it('should throw error for negative bedrooms', async () => {
@@ -121,9 +121,9 @@ describe('PropertyService', () => {
         availableFrom: new Date(),
       };
 
-      await expect(
-        propertyService.createProperty(landlordId, invalidData)
-      ).rejects.toThrow('Bedrooms must be a non-negative number');
+      await expect(propertyService.createProperty(landlordId, invalidData)).rejects.toThrow(
+        'Bedrooms must be a non-negative number'
+      );
     });
   });
 
@@ -158,13 +158,11 @@ describe('PropertyService', () => {
       };
 
       (doc as jest.Mock).mockReturnValue({});
-      (getDoc as jest.Mock)
-        .mockResolvedValueOnce({ exists: () => true })
-        .mockResolvedValueOnce({
-          exists: () => true,
-          id: propertyId,
-          data: () => mockPropertyData,
-        });
+      (getDoc as jest.Mock).mockResolvedValueOnce({ exists: () => true }).mockResolvedValueOnce({
+        exists: () => true,
+        id: propertyId,
+        data: () => mockPropertyData,
+      });
       (updateDoc as jest.Mock).mockResolvedValue(undefined);
 
       const result = await propertyService.updateProperty(propertyId, updates);
@@ -184,9 +182,9 @@ describe('PropertyService', () => {
       (doc as jest.Mock).mockReturnValue({});
       (getDoc as jest.Mock).mockResolvedValue({ exists: () => false });
 
-      await expect(
-        propertyService.updateProperty(propertyId, updates)
-      ).rejects.toThrow('Property not found');
+      await expect(propertyService.updateProperty(propertyId, updates)).rejects.toThrow(
+        'Property not found'
+      );
     });
   });
 
@@ -366,13 +364,11 @@ describe('PropertyService', () => {
       };
 
       (doc as jest.Mock).mockReturnValue({});
-      (getDoc as jest.Mock)
-        .mockResolvedValueOnce({ exists: () => true })
-        .mockResolvedValueOnce({
-          exists: () => true,
-          id: propertyId,
-          data: () => mockPropertyData,
-        });
+      (getDoc as jest.Mock).mockResolvedValueOnce({ exists: () => true }).mockResolvedValueOnce({
+        exists: () => true,
+        id: propertyId,
+        data: () => mockPropertyData,
+      });
       (updateDoc as jest.Mock).mockResolvedValue(undefined);
 
       const result = await propertyService.updateStatus(propertyId, newStatus);

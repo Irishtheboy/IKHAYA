@@ -1,6 +1,12 @@
 import { initializeApp, FirebaseApp } from 'firebase/app';
 import { getAuth, Auth, connectAuthEmulator } from 'firebase/auth';
-import { getFirestore, Firestore, connectFirestoreEmulator } from 'firebase/firestore';
+import {
+  getFirestore,
+  Firestore,
+  connectFirestoreEmulator,
+  initializeFirestore,
+  memoryLocalCache,
+} from 'firebase/firestore';
 import { getStorage, FirebaseStorage, connectStorageEmulator } from 'firebase/storage';
 
 // Firebase configuration from environment variables
@@ -18,7 +24,13 @@ const app: FirebaseApp = initializeApp(firebaseConfig);
 
 // Initialize Firebase services
 const auth: Auth = getAuth(app);
-const db: Firestore = getFirestore(app);
+
+// Initialize Firestore with memory-only cache (no persistence)
+// This prevents cache corruption issues
+const db: Firestore = initializeFirestore(app, {
+  localCache: memoryLocalCache(),
+});
+
 const storage: FirebaseStorage = getStorage(app);
 
 // Connect to Firebase Emulators if in development mode

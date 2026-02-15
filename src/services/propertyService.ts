@@ -133,10 +133,7 @@ class PropertyService {
    * @returns Promise resolving to the updated property
    * @throws Error if update fails or property not found
    */
-  async updateProperty(
-    propertyId: string,
-    updates: Partial<PropertyDTO>
-  ): Promise<Property> {
+  async updateProperty(propertyId: string, updates: Partial<PropertyDTO>): Promise<Property> {
     try {
       const propertyRef = doc(db, COLLECTIONS.PROPERTIES, propertyId);
 
@@ -412,7 +409,7 @@ class PropertyService {
       // Check if property exists
       const propertyRef = doc(db, COLLECTIONS.PROPERTIES, propertyId);
       const propertySnap = await getDoc(propertyRef);
-      
+
       if (!propertySnap.exists()) {
         throw new Error('Property not found');
       }
@@ -467,7 +464,7 @@ class PropertyService {
       // Check if property exists
       const propertyRef = doc(db, COLLECTIONS.PROPERTIES, propertyId);
       const propertySnap = await getDoc(propertyRef);
-      
+
       if (!propertySnap.exists()) {
         throw new Error('Property not found');
       }

@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { analyticsService, LandlordDashboard as LandlordDashboardData } from '../../services/analyticsService';
+import {
+  analyticsService,
+  LandlordDashboard as LandlordDashboardData,
+} from '../../services/analyticsService';
 import { useAuth } from '../../contexts/AuthContext';
 
 /**
@@ -92,9 +95,7 @@ const LandlordDashboard: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Total Leads</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">
-                {dashboardData.totalLeads}
-              </p>
+              <p className="text-3xl font-bold text-gray-900 mt-2">{dashboardData.totalLeads}</p>
             </div>
             <div className="bg-green-100 rounded-full p-3">
               <svg

@@ -8,16 +8,119 @@ import {
   serverTimestamp,
   orderBy,
   Timestamp,
+  setDoc,
 } from 'firebase/firestore';
-import { db } from '../config/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from '../config/firebase';
 import { User } from '../types/firebase';
 import { COLLECTIONS } from '../types/firestore-schema';
+
+/**
+ * DTO for creating a landlord account
+ */
+export interface CreateLandlordDTO {
+  name: string;
+  email: string;
+  password: string;
+  phone?: string;
+}
 
 /**
  * Admin Service
  * Handles admin-specific operations like landlord approval management
  */
 class AdminService {
+  /**
+   * Create a new landlord account (Admin only)
+   *
+   * @param landlordData - Data for the new landlord
+   * @param adminId - ID of the admin creating the account
+   * @returns Promise resolving to the created user
+   */
+  async createLandlord(landlordData: CreateLandlordDTO, adminId: string): Promise<User> {
+    try {
+      // Create Firebase Auth user
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        landlordData.email,
+        landlordData.password
+      );
+
+      const userId = userCredential.user.uid;
+
+      // Create user document in Firestore
+      const userData: Omit<User, 'id'> = {
+        uid: userId,
+        email: landlordData.email,
+        name: landlordData.name,
+        role: 'landlord',
+        approved: true, // Auto-approved since created by admin
+        approvedBy: adminId,
+        approvedAt: serverTimestamp() as Timestamp,
+        emailVerified: false,
+        createdAt: serverTimestamp() as Timestamp,
+        updatedAt: serverTimestamp() as Timestamp,
+        disabled: false,
+      };
+
+      // Only add phone if provided
+      if (landlordData.phone) {
+        userData.phone = landlordData.phone;
+      }
+
+      await setDoc(doc(db, COLLECTIONS.USERS, userId), userData);
+
+      return {
+        id: userId,
+        ...userData,
+      } as User;
+    } catch (error: any) {
+      console.error('Error creating landlord:', error);
+      if (error.code === 'auth/email-already-in-use') {
+        throw new Error('Email address is already in use');
+      }
+      throw new Error('Failed to create landlord account');
+    }
+  }
+
+  /**
+   * Enable a user account
+   *
+   * @param userId - ID of the user to enable
+   * @returns Promise that resolves when account is enabled
+   */
+  async enableAccount(userId: string): Promise<void> {
+    try {
+      const userRef = doc(db, COLLECTIONS.USERS, userId);
+      await updateDoc(userRef, {
+        disabled: false,
+        updatedAt: serverTimestamp(),
+      });
+    } catch (error) {
+      console.error('Error enabling account:', error);
+      throw new Error('Failed to enable account');
+    }
+  }
+
+  /**
+   * Disable a user account
+   *
+   * @param userId - ID of the user to disable
+   * @returns Promise that resolves when account is disabled
+   */
+  async disableAccount(userId: string): Promise<void> {
+    try {
+      const userRef = doc(db, COLLECTIONS.USERS, userId);
+      await updateDoc(userRef, {
+        disabled: true,
+        updatedAt: serverTimestamp(),
+      });
+    } catch (error) {
+      console.error('Error disabling account:', error);
+      throw new Error('Failed to disable account');
+    }
+  }
+
   /**
    * Get all pending landlord registrations awaiting approval
    *
@@ -28,8 +131,7 @@ class AdminService {
       const q = query(
         collection(db, COLLECTIONS.USERS),
         where('role', '==', 'landlord'),
-        where('approved', '==', false),
-        orderBy('createdAt', 'desc')
+        where('approved', '==', false)
       );
 
       const querySnapshot = await getDocs(q);
@@ -42,7 +144,12 @@ class AdminService {
         } as User);
       });
 
-      return landlords;
+      // Sort by createdAt in memory
+      return landlords.sort((a, b) => {
+        const aTime = a.createdAt?.toMillis?.() || 0;
+        const bTime = b.createdAt?.toMillis?.() || 0;
+        return bTime - aTime;
+      });
     } catch (error) {
       console.error('Error fetching pending landlords:', error);
       throw new Error('Failed to fetch pending landlords');
@@ -59,8 +166,7 @@ class AdminService {
       const q = query(
         collection(db, COLLECTIONS.USERS),
         where('role', '==', 'landlord'),
-        where('approved', '==', true),
-        orderBy('approvedAt', 'desc')
+        where('approved', '==', true)
       );
 
       const querySnapshot = await getDocs(q);
@@ -73,7 +179,12 @@ class AdminService {
         } as User);
       });
 
-      return landlords;
+      // Sort by approvedAt in memory
+      return landlords.sort((a, b) => {
+        const aTime = a.approvedAt?.toMillis?.() || 0;
+        const bTime = b.approvedAt?.toMillis?.() || 0;
+        return bTime - aTime;
+      });
     } catch (error) {
       console.error('Error fetching approved landlords:', error);
       throw new Error('Failed to fetch approved landlords');
@@ -132,7 +243,7 @@ class AdminService {
    */
   async getAllUsers(): Promise<User[]> {
     try {
-      const q = query(collection(db, COLLECTIONS.USERS), orderBy('createdAt', 'desc'));
+      const q = query(collection(db, COLLECTIONS.USERS));
 
       const querySnapshot = await getDocs(q);
       const users: User[] = [];
@@ -144,7 +255,12 @@ class AdminService {
         } as User);
       });
 
-      return users;
+      // Sort by createdAt in memory
+      return users.sort((a, b) => {
+        const aTime = a.createdAt?.toMillis?.() || 0;
+        const bTime = b.createdAt?.toMillis?.() || 0;
+        return bTime - aTime;
+      });
     } catch (error) {
       console.error('Error fetching all users:', error);
       throw new Error('Failed to fetch users');

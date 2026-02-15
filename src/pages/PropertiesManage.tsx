@@ -39,9 +39,7 @@ const PropertiesManage: React.FC = () => {
     try {
       await propertyService.updateStatus(propertyId, status);
       // Update local state
-      setProperties((prev) =>
-        prev.map((p) => (p.id === propertyId ? { ...p, status } : p))
-      );
+      setProperties((prev) => prev.map((p) => (p.id === propertyId ? { ...p, status } : p)));
     } catch (err: any) {
       alert(err.message || 'Failed to update property status');
     }

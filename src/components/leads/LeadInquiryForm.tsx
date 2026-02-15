@@ -83,9 +83,7 @@ export const LeadInquiryForm: React.FC<LeadInquiryFormProps> = ({
             maxLength={1000}
             required
           />
-          <p className="text-sm text-gray-500 mt-1">
-            {message.length}/1000 characters
-          </p>
+          <p className="text-sm text-gray-500 mt-1">{message.length}/1000 characters</p>
         </div>
 
         {error && (

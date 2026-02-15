@@ -80,7 +80,7 @@ export const MaintenanceRequestForm: React.FC = () => {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    
+
     // Limit to 3 images
     if (images.length + files.length > 3) {
       setError('Maximum 3 images allowed per request');
@@ -162,7 +162,7 @@ export const MaintenanceRequestForm: React.FC = () => {
       }
 
       setSuccess(true);
-      
+
       // Reset form
       setFormData({
         propertyId: activeLeases.length === 1 ? activeLeases[0].propertyId : '',
@@ -197,9 +197,7 @@ export const MaintenanceRequestForm: React.FC = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
-            <h2 className="text-xl font-semibold text-yellow-800 mb-2">
-              No Active Leases
-            </h2>
+            <h2 className="text-xl font-semibold text-yellow-800 mb-2">No Active Leases</h2>
             <p className="text-yellow-700">
               You need an active lease to submit a maintenance request.
             </p>

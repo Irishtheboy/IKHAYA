@@ -31,7 +31,7 @@ export interface PaymentDTO {
  */
 class PaymentService {
   // Default commission rate (10%)
-  private readonly DEFAULT_COMMISSION_RATE = 0.10;
+  private readonly DEFAULT_COMMISSION_RATE = 0.1;
 
   /**
    * Calculate commission for a lease

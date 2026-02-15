@@ -4,16 +4,15 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 /* Mobile-optimized scrollbar */
@@ -62,8 +61,8 @@ select:focus {
 @media (max-width: 767px) {
   button,
   a.button,
-  input[type="submit"],
-  input[type="button"] {
+  input[type='submit'],
+  input[type='button'] {
     min-height: 44px;
     min-width: 44px;
   }
@@ -100,7 +99,7 @@ img {
 }
 
 /* Lazy loading placeholder */
-img[loading="lazy"] {
+img[loading='lazy'] {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
@@ -130,15 +129,14 @@ body {
 
 /* Mobile-optimized form inputs */
 @media (max-width: 767px) {
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  input[type="number"],
-  input[type="tel"],
-  input[type="date"],
+  input[type='text'],
+  input[type='email'],
+  input[type='password'],
+  input[type='number'],
+  input[type='tel'],
+  input[type='date'],
   textarea,
   select {
     font-size: 16px; /* Prevents zoom on iOS */
   }
 }
-

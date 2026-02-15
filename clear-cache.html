@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Firebase Cache</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; }
+        button {
+            background: #4285f4;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover { background: #357ae8; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; }
+        .info { background: #e3f2fd; padding: 15px; border-radius: 4px; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Clear Firebase Cache</h1>
+        
+        <div class="info">
+            <strong>This will clear all IndexedDB databases to fix the Firestore error.</strong>
+        </div>
+
+        <button onclick="clearAllDatabases()">Clear All Databases</button>
+        <button onclick="clearCacheStorage()">Clear Cache Storage</button>
+        <button onclick="clearEverything()">Clear Everything</button>
+        
+        <div id="status"></div>
+
+        <div class="info" style="margin-top: 30px;">
+            <h3>Manual Steps:</h3>
+            <ol>
+                <li>Press F12 to open DevTools</li>
+                <li>Go to "Application" tab</li>
+                <li>Expand "Storage" in left sidebar</li>
+                <li>Click "IndexedDB"</li>
+                <li>Right-click each database and select "Delete"</li>
+                <li>Click "Clear site data" at the top</li>
+                <li>Close ALL tabs with localhost:3001</li>
+                <li>Open a NEW incognito window</li>
+                <li>Go to http://localhost:3001</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const status = document.getElementById('status');
+            const p = document.createElement('p');
+            p.className = type;
+            p.textContent = message;
+            status.appendChild(p);
+        }
+
+        async function clearAllDatabases() {
+            log('Clearing IndexedDB databases...');
+            try {
+                const databases = await indexedDB.databases();
+                for (const db of databases) {
+                    if (db.name) {
+                        indexedDB.deleteDatabase(db.name);
+                        log(`Deleted: ${db.name}`, 'success');
+                    }
+                }
+                log('✅ All databases cleared!', 'success');
+                log('Now close this tab and open a NEW incognito window', 'success');
+            } catch (error) {
+                log('Error: ' + error.message, 'error');
+            }
+        }
+
+        async function clearCacheStorage() {
+            log('Clearing cache storage...');
+            try {
+                const cacheNames = await caches.keys();
+                for (const name of cacheNames) {
+                    await caches.delete(name);
+                    log(`Deleted cache: ${name}`, 'success');
+                }
+                log('✅ Cache storage cleared!', 'success');
+            } catch (error) {
+                log('Error: ' + error.message, 'error');
+            }
+        }
+
+        async function clearEverything() {
+            await clearAllDatabases();
+            await clearCacheStorage();
+            
+            // Clear localStorage
+            localStorage.clear();
+            log('✅ LocalStorage cleared!', 'success');
+            
+            // Clear sessionStorage
+            sessionStorage.clear();
+            log('✅ SessionStorage cleared!', 'success');
+            
+            log('========================================', 'success');
+            log('✅ EVERYTHING CLEARED!', 'success');
+            log('========================================', 'success');
+            log('NEXT STEPS:', 'success');
+            log('1. Close ALL tabs with localhost:3001', 'success');
+            log('2. Open a NEW INCOGNITO window', 'success');
+            log('3. Go to http://localhost:3001', 'success');
+            log('4. Login and test', 'success');
+        }
+    </script>
+</body>
+</html>

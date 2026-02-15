@@ -47,17 +47,12 @@ const PropertySearch: React.FC = () => {
     }
   };
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setSearchCriteria((prev) => ({
       ...prev,
       [name]:
-        name === 'minPrice' ||
-        name === 'maxPrice' ||
-        name === 'bedrooms' ||
-        name === 'bathrooms'
+        name === 'minPrice' || name === 'maxPrice' || name === 'bedrooms' || name === 'bathrooms'
           ? value
             ? Number(value)
             : undefined
@@ -89,8 +84,12 @@ const PropertySearch: React.FC = () => {
     <Layout>
       <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-8 sm:py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4">Find Your Perfect Home</h1>
-          <p className="text-base sm:text-lg md:text-xl text-indigo-100">Search from thousands of available properties</p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4">
+            Find Your Perfect Home
+          </h1>
+          <p className="text-base sm:text-lg md:text-xl text-indigo-100">
+            Search from thousands of available properties
+          </p>
         </div>
       </div>
 
@@ -114,7 +113,10 @@ const PropertySearch: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="propertyType" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="propertyType"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Property Type
               </label>
               <select

@@ -5,6 +5,14 @@
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "landlordId", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "properties",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "landlordId", "order": "ASCENDING" },
         { "fieldPath": "status", "order": "ASCENDING" },
         { "fieldPath": "createdAt", "order": "DESCENDING" }
       ]
@@ -32,6 +40,14 @@
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "tenantId", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "leads",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "tenantId", "order": "ASCENDING" },
         { "fieldPath": "status", "order": "ASCENDING" },
         { "fieldPath": "createdAt", "order": "DESCENDING" }
       ]
@@ -42,6 +58,14 @@
       "fields": [
         { "fieldPath": "propertyId", "order": "ASCENDING" },
         { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "leads",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "landlordId", "order": "ASCENDING" },
         { "fieldPath": "createdAt", "order": "DESCENDING" }
       ]
     },
@@ -104,6 +128,14 @@
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "tenantId", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "notifications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
         { "fieldPath": "createdAt", "order": "DESCENDING" }
       ]
     },
@@ -207,13 +239,6 @@
       "fields": [
         { "fieldPath": "read", "order": "ASCENDING" },
         { "fieldPath": "createdAt", "order": "ASCENDING" }
-      ]
-    },
-    {
-      "collectionGroup": "savedProperties",
-      "queryScope": "COLLECTION",
-      "fields": [
-        { "fieldPath": "savedAt", "order": "DESCENDING" }
       ]
     },
     {

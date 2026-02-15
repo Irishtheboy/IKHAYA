@@ -105,7 +105,7 @@ export const MessagingInterface: React.FC<MessagingInterfaceProps> = ({
 
   const formatTimestamp = (timestamp: any) => {
     if (!timestamp) return '';
-    
+
     const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
     const now = new Date();
     const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
@@ -150,17 +150,11 @@ export const MessagingInterface: React.FC<MessagingInterfaceProps> = ({
               >
                 <div
                   className={`max-w-[70%] rounded-lg px-4 py-2 ${
-                    isOwnMessage
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-900'
+                    isOwnMessage ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-900'
                   }`}
                 >
                   <p className="whitespace-pre-wrap break-words">{message.content}</p>
-                  <p
-                    className={`text-xs mt-1 ${
-                      isOwnMessage ? 'text-blue-100' : 'text-gray-500'
-                    }`}
-                  >
+                  <p className={`text-xs mt-1 ${isOwnMessage ? 'text-blue-100' : 'text-gray-500'}`}>
                     {formatTimestamp(message.createdAt)}
                   </p>
                 </div>
@@ -198,9 +192,7 @@ export const MessagingInterface: React.FC<MessagingInterfaceProps> = ({
             {loading ? 'Sending...' : 'Send'}
           </button>
         </div>
-        <p className="text-sm text-gray-500 mt-1">
-          {newMessage.length}/1000 characters
-        </p>
+        <p className="text-sm text-gray-500 mt-1">{newMessage.length}/1000 characters</p>
       </form>
     </div>
   );

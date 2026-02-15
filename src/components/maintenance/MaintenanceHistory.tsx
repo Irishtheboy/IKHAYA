@@ -161,10 +161,7 @@ export const MaintenanceHistory: React.FC = () => {
       ) : (
         <div className="space-y-4">
           {requests.map((request) => (
-            <div
-              key={request.id}
-              className="bg-white rounded-lg shadow-md p-6"
-            >
+            <div key={request.id} className="bg-white rounded-lg shadow-md p-6">
               <div className="flex justify-between items-start mb-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
@@ -222,9 +219,7 @@ export const MaintenanceHistory: React.FC = () => {
                     {request.notes.map((note, index) => (
                       <div key={index} className="text-sm text-gray-600">
                         <p>{note.note}</p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {formatDate(note.createdAt)}
-                        </p>
+                        <p className="text-xs text-gray-500 mt-1">{formatDate(note.createdAt)}</p>
                       </div>
                     ))}
                   </div>

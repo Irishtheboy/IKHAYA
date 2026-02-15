@@ -222,7 +222,10 @@ class SubscriptionService {
    * @returns Promise resolving to the updated subscription
    * @throws Error if subscription not found
    */
-  async renewSubscription(subscriptionId: string, durationMonths: number = 12): Promise<Subscription> {
+  async renewSubscription(
+    subscriptionId: string,
+    durationMonths: number = 12
+  ): Promise<Subscription> {
     try {
       const subscriptionRef = doc(db, COLLECTIONS.SUBSCRIPTIONS, subscriptionId);
       const subscriptionSnap = await getDoc(subscriptionRef);
@@ -347,7 +350,9 @@ class SubscriptionService {
   async isPremiumLandlord(landlordId: string): Promise<boolean> {
     try {
       const subscription = await this.getActiveSubscription(landlordId);
-      return subscription !== null && subscription.tier === 'premium' && subscription.status === 'active';
+      return (
+        subscription !== null && subscription.tier === 'premium' && subscription.status === 'active'
+      );
     } catch (error: any) {
       console.error('Error checking premium status:', error);
       return false;

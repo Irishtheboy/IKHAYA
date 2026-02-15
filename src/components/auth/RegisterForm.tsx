@@ -194,19 +194,17 @@ const RegisterForm: React.FC = () => {
           disabled={isLoading}
         >
           <option value="">Select your role</option>
-          <option value="landlord">Landlord (I have properties to rent)</option>
           <option value="tenant">Tenant (I'm looking for a property)</option>
         </select>
         {errors.role && <p className="mt-1 text-sm text-red-600">{errors.role}</p>}
-        
-        {/* Landlord Approval Notice */}
-        {formData.role === 'landlord' && (
-          <div className="mt-2 bg-blue-50 border border-blue-200 rounded-md p-3">
-            <p className="text-sm text-blue-800">
-              <strong>Note:</strong> Landlord accounts require admin approval before you can post properties or use the platform. You will receive an email notification once your account is approved.
-            </p>
-          </div>
-        )}
+
+        {/* Info Notice */}
+        <div className="mt-2 bg-blue-50 border border-blue-200 rounded-md p-3">
+          <p className="text-sm text-blue-800">
+            <strong>Are you a landlord?</strong> Landlord accounts are created by our admin team.
+            Please contact us at info@ikhayarent.co.za to get started.
+          </p>
+        </div>
       </div>
 
       {/* Phone Field (Optional) */}

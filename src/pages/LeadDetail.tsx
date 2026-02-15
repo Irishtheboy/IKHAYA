@@ -117,9 +117,7 @@ export const LeadDetail: React.FC = () => {
                   </h3>
                   <p className="font-semibold">{otherUser.name}</p>
                   <p className="text-sm text-gray-600">{otherUser.email}</p>
-                  {otherUser.phone && (
-                    <p className="text-sm text-gray-600">{otherUser.phone}</p>
-                  )}
+                  {otherUser.phone && <p className="text-sm text-gray-600">{otherUser.phone}</p>}
                 </div>
 
                 <div>
@@ -131,9 +129,7 @@ export const LeadDetail: React.FC = () => {
 
                 <div>
                   <h3 className="text-sm font-medium text-gray-500 mb-1">Initial Message</h3>
-                  <p className="text-sm text-gray-700 whitespace-pre-wrap">
-                    {lead.initialMessage}
-                  </p>
+                  <p className="text-sm text-gray-700 whitespace-pre-wrap">{lead.initialMessage}</p>
                 </div>
 
                 <div>

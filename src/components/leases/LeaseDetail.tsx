@@ -86,7 +86,11 @@ const LeaseDetail: React.FC = () => {
   const handleTerminate = async () => {
     if (!lease || !currentUser) return;
 
-    if (!window.confirm('Are you sure you want to terminate this lease? This action cannot be undone.')) {
+    if (
+      !window.confirm(
+        'Are you sure you want to terminate this lease? This action cannot be undone.'
+      )
+    ) {
       return;
     }
 
@@ -140,7 +144,9 @@ const LeaseDetail: React.FC = () => {
     };
 
     return (
-      <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors[status] || 'bg-gray-200 text-gray-800'}`}>
+      <span
+        className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors[status] || 'bg-gray-200 text-gray-800'}`}
+      >
         {status.replace('_', ' ').toUpperCase()}
       </span>
     );
@@ -204,11 +210,21 @@ const LeaseDetail: React.FC = () => {
         <div className="bg-white shadow rounded-lg p-6 mb-6">
           <h2 className="text-xl font-semibold mb-4">Property</h2>
           <div className="space-y-2">
-            <p><span className="font-medium">Address:</span> {property.address}</p>
-            <p><span className="font-medium">City:</span> {property.city}</p>
-            <p><span className="font-medium">Type:</span> {property.propertyType}</p>
-            <p><span className="font-medium">Bedrooms:</span> {property.bedrooms}</p>
-            <p><span className="font-medium">Bathrooms:</span> {property.bathrooms}</p>
+            <p>
+              <span className="font-medium">Address:</span> {property.address}
+            </p>
+            <p>
+              <span className="font-medium">City:</span> {property.city}
+            </p>
+            <p>
+              <span className="font-medium">Type:</span> {property.propertyType}
+            </p>
+            <p>
+              <span className="font-medium">Bedrooms:</span> {property.bedrooms}
+            </p>
+            <p>
+              <span className="font-medium">Bathrooms:</span> {property.bathrooms}
+            </p>
           </div>
         </div>
       )}

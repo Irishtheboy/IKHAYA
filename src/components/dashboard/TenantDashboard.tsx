@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { analyticsService, TenantDashboard as TenantDashboardData } from '../../services/analyticsService';
+import {
+  analyticsService,
+  TenantDashboard as TenantDashboardData,
+} from '../../services/analyticsService';
 import { useAuth } from '../../contexts/AuthContext';
 
 /**
@@ -76,7 +79,9 @@ const TenantDashboard: React.FC = () => {
               <p className="text-xl font-semibold text-gray-900">
                 {dashboardData.currentLease.endDate instanceof Date
                   ? dashboardData.currentLease.endDate.toLocaleDateString()
-                  : new Date(dashboardData.currentLease.endDate.seconds * 1000).toLocaleDateString()}
+                  : new Date(
+                      dashboardData.currentLease.endDate.seconds * 1000
+                    ).toLocaleDateString()}
               </p>
             </div>
             <div>
@@ -250,12 +255,12 @@ const TenantDashboard: React.FC = () => {
                       inquiry.status === 'new'
                         ? 'bg-blue-100 text-blue-800'
                         : inquiry.status === 'contacted'
-                        ? 'bg-yellow-100 text-yellow-800'
-                        : inquiry.status === 'scheduled'
-                        ? 'bg-purple-100 text-purple-800'
-                        : inquiry.status === 'converted'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-gray-100 text-gray-800'
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : inquiry.status === 'scheduled'
+                            ? 'bg-purple-100 text-purple-800'
+                            : inquiry.status === 'converted'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-gray-100 text-gray-800'
                     }`}
                   >
                     {inquiry.status}
@@ -293,10 +298,10 @@ const TenantDashboard: React.FC = () => {
                         request.priority === 'urgent'
                           ? 'bg-red-100 text-red-800'
                           : request.priority === 'high'
-                          ? 'bg-orange-100 text-orange-800'
-                          : request.priority === 'medium'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-gray-100 text-gray-800'
+                            ? 'bg-orange-100 text-orange-800'
+                            : request.priority === 'medium'
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : 'bg-gray-100 text-gray-800'
                       }`}
                     >
                       {request.priority}
@@ -307,10 +312,10 @@ const TenantDashboard: React.FC = () => {
                       request.status === 'pending'
                         ? 'bg-yellow-100 text-yellow-800'
                         : request.status === 'in_progress'
-                        ? 'bg-blue-100 text-blue-800'
-                        : request.status === 'completed'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-gray-100 text-gray-800'
+                          ? 'bg-blue-100 text-blue-800'
+                          : request.status === 'completed'
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-gray-100 text-gray-800'
                     }`}
                   >
                     {request.status.replace('_', ' ')}
