@@ -3,7 +3,6 @@ import { maintenanceService } from '../../services/maintenanceService';
 import { propertyService } from '../../services/propertyService';
 import { MaintenanceRequest, MaintenanceStatus, Property } from '../../types/firebase';
 import { useAuth } from '../../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
 
 /**
  * Maintenance Management Component
