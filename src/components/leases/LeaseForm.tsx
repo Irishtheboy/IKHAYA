@@ -89,6 +89,10 @@ const LeaseForm: React.FC<LeaseFormProps> = ({
         throw new Error('Please enter a valid deposit amount');
       }
 
+      if (parseFloat(formData.deposit) > 5000) {
+        throw new Error('Deposit cannot exceed R5,000');
+      }
+
       if (!formData.startDate) {
         throw new Error('Please select a start date');
       }
@@ -215,18 +219,19 @@ const LeaseForm: React.FC<LeaseFormProps> = ({
         {/* Deposit */}
         <div>
           <label htmlFor="deposit" className="block text-sm font-medium text-gray-700 mb-2">
-            Deposit Amount (R) *
+            Deposit Amount (R) * <span className="text-xs text-gray-500">(Maximum R5,000)</span>
           </label>
           <input
             type="number"
             id="deposit"
             name="deposit"
+            min="0"
+            max="5000"
+            step="0.01"
             value={formData.deposit}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="10000"
-            min="0"
-            step="0.01"
+            placeholder="5000"
             required
           />
         </div>

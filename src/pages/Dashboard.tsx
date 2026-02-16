@@ -40,11 +40,11 @@ const Dashboard: React.FC = () => {
         // Check if landlord is approved
         if (userProfile.approved === false) {
           return (
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-yellow-800 mb-2">
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-8 shadow-sm">
+              <h2 className="text-2xl font-light text-amber-900 mb-3 tracking-tight">
                 Account Pending Approval
               </h2>
-              <p className="text-yellow-700">
+              <p className="text-amber-800 font-light leading-relaxed">
                 Your landlord account is currently pending admin approval. You will be able to post
                 properties and use the platform once your account has been approved. You will
                 receive an email notification when this happens.
@@ -62,12 +62,15 @@ const Dashboard: React.FC = () => {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">{getDashboardTitle()}</h1>
-          <p className="text-gray-600 mt-2">{getDashboardDescription()}</p>
+      {/* Hero Header */}
+      <div className="bg-slate-900 border-b border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <h1 className="text-4xl font-light text-white tracking-tight">{getDashboardTitle()}</h1>
+          <p className="text-slate-400 mt-3 font-light text-lg">{getDashboardDescription()}</p>
         </div>
+      </div>
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {renderDashboard()}
       </div>
     </Layout>

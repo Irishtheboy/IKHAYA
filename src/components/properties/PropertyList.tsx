@@ -2,6 +2,17 @@ import React from 'react';
 import { Property, PropertyStatus } from '../../types/firebase';
 import { Link } from 'react-router-dom';
 import { generatePropertyUrl } from '../../utils/seo';
+import {
+  Card,
+  Badge,
+  Button,
+  PropertyIcon,
+  EditIcon,
+  DeleteIcon,
+  AddIcon,
+  LocationIcon,
+  MoneyIcon,
+} from '../common';
 
 interface PropertyListProps {
   properties: Property[];
@@ -16,16 +27,16 @@ const PropertyList: React.FC<PropertyListProps> = ({
   onDelete,
   isLoading = false,
 }) => {
-  const getStatusColor = (status: PropertyStatus): string => {
+  const getStatusVariant = (status: PropertyStatus) => {
     switch (status) {
       case 'available':
-        return 'bg-green-100 text-green-800';
+        return 'success';
       case 'occupied':
-        return 'bg-blue-100 text-blue-800';
+        return 'primary';
       case 'inactive':
-        return 'bg-gray-100 text-gray-800';
+        return 'secondary';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'default';
     }
   };
 
@@ -47,127 +58,80 @@ const PropertyList: React.FC<PropertyListProps> = ({
 
   if (properties.length === 0) {
     return (
-      <div className="text-center py-12">
-        <svg
-          className="mx-auto h-12 w-12 text-gray-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-          />
-        </svg>
-        <h3 className="mt-2 text-sm font-medium text-gray-900">No properties</h3>
-        <p className="mt-1 text-sm text-gray-500">
-          Get started by creating a new property listing.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/properties/create"
-            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-          >
-            <svg
-              className="-ml-1 mr-2 h-5 w-5"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-            New Property
-          </Link>
-        </div>
-      </div>
+      <Card className="text-center py-12" padding="xl">
+        <PropertyIcon size="xl" className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-medium text-gray-900 mb-2">No properties</h3>
+        <p className="text-gray-500 mb-6">Get started by creating a new property listing.</p>
+        <Button as={Link} to="/properties/create" leftIcon={AddIcon} size="lg">
+          New Property
+        </Button>
+      </Card>
     );
   }
 
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {properties.map((property) => (
-        <Link
-          key={property.id}
-          to={generatePropertyUrl(property.id, property)}
-          className="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow block"
-        >
-          {/* Property Image */}
-          <div className="h-48 bg-gray-200 relative">
-            {property.images && property.images.length > 0 ? (
-              <img
-                src={property.images[0]}
-                alt={property.address}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="flex items-center justify-center h-full">
-                <svg
-                  className="h-16 w-16 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                  />
-                </svg>
-              </div>
-            )}
-            {property.isPremium && (
-              <span className="absolute top-2 right-2 bg-yellow-400 text-yellow-900 px-2 py-1 rounded text-xs font-semibold">
-                Premium
-              </span>
-            )}
-          </div>
+        <Card key={property.id} className="overflow-hidden group" hover>
+          <Link to={generatePropertyUrl(property.id, property)} className="block">
+            {/* Property Image */}
+            <div className="h-48 bg-gray-200 relative overflow-hidden">
+              {property.images && property.images.length > 0 ? (
+                <img
+                  src={property.images[0]}
+                  alt={property.address}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full">
+                  <PropertyIcon size="xl" className="text-gray-400" />
+                </div>
+              )}
 
-          {/* Property Details */}
-          <div className="p-4">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="text-lg font-semibold text-gray-900 truncate">
-                {property.propertyType.charAt(0).toUpperCase() + property.propertyType.slice(1)}
-              </h3>
-              <span
-                className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(property.status)}`}
-              >
-                {property.status}
-              </span>
+              {/* Premium Badge */}
+              {property.isPremium && (
+                <div className="absolute top-3 right-3">
+                  <Badge variant="warning" size="sm">
+                    Premium
+                  </Badge>
+                </div>
+              )}
+
+              {/* Status Badge */}
+              <div className="absolute top-3 left-3">
+                <Badge variant={getStatusVariant(property.status)} size="sm">
+                  {property.status}
+                </Badge>
+              </div>
             </div>
 
-            <p className="text-sm text-gray-600 mb-2 truncate">{property.address}</p>
-            <p className="text-sm text-gray-500 mb-3">
-              {property.city}, {property.province}
-            </p>
+            {/* Property Details */}
+            <div className="p-4">
+              <div className="flex items-start justify-between mb-3">
+                <h3 className="text-lg font-semibold text-gray-900 truncate flex-1">
+                  {property.propertyType.charAt(0).toUpperCase() + property.propertyType.slice(1)}
+                </h3>
+              </div>
 
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center space-x-4 text-sm text-gray-600">
+              <div className="flex items-start mb-2">
+                <LocationIcon size="sm" className="text-gray-400 mt-0.5 mr-2 flex-shrink-0" />
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm text-gray-600 truncate">{property.address}</p>
+                  <p className="text-sm text-gray-500">
+                    {property.city}, {property.province}
+                  </p>
+                </div>
+              </div>
+
+              {/* Property Features */}
+              <div className="flex items-center space-x-4 text-sm text-gray-600 mb-4">
                 <span className="flex items-center">
-                  <svg
-                    className="h-4 w-4 mr-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                    />
-                  </svg>
+                  <PropertyIcon size="xs" className="mr-1" />
                   {property.bedrooms} bed
                 </span>
                 <span className="flex items-center">
                   <svg
-                    className="h-4 w-4 mr-1"
+                    className="h-3 w-3 mr-1"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -182,23 +146,31 @@ const PropertyList: React.FC<PropertyListProps> = ({
                   {property.bathrooms} bath
                 </span>
               </div>
+
+              {/* Price */}
+              <div className="flex items-center mb-4">
+                <MoneyIcon size="sm" className="text-blue-600 mr-2" />
+                <span className="text-xl font-bold text-blue-600">
+                  {formatCurrency(property.rentAmount)}/mo
+                </span>
+              </div>
             </div>
+          </Link>
 
-            <p className="text-xl font-bold text-blue-600 mb-4">
-              {formatCurrency(property.rentAmount)}/mo
-            </p>
-
-            {/* Actions */}
-            <div className="flex items-center justify-between border-t pt-3">
-              <button
-                onClick={(e) => {
+          {/* Actions */}
+          <div className="px-4 pb-4 border-t border-gray-100 pt-4">
+            <div className="flex items-center justify-between space-x-2">
+              <Button
+                variant="outline"
+                size="sm"
+                leftIcon={EditIcon}
+                onClick={(e: React.MouseEvent) => {
                   e.preventDefault();
                   window.location.href = `/properties/${property.id}/edit`;
                 }}
-                className="text-sm text-blue-600 hover:text-blue-800 font-medium"
               >
                 Edit
-              </button>
+              </Button>
 
               {onStatusChange && (
                 <select
@@ -208,7 +180,7 @@ const PropertyList: React.FC<PropertyListProps> = ({
                     onStatusChange(property.id, e.target.value as PropertyStatus);
                   }}
                   onClick={(e) => e.preventDefault()}
-                  className="text-sm border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className="text-sm border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 px-2 py-1"
                 >
                   <option value="available">Available</option>
                   <option value="occupied">Occupied</option>
@@ -217,21 +189,24 @@ const PropertyList: React.FC<PropertyListProps> = ({
               )}
 
               {onDelete && (
-                <button
-                  onClick={(e) => {
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  leftIcon={DeleteIcon}
+                  onClick={(e: React.MouseEvent) => {
                     e.preventDefault();
                     if (window.confirm('Are you sure you want to delete this property?')) {
                       onDelete(property.id);
                     }
                   }}
-                  className="text-sm text-red-600 hover:text-red-800 font-medium"
+                  className="text-red-600 hover:text-red-700 hover:bg-red-50"
                 >
                   Delete
-                </button>
+                </Button>
               )}
             </div>
           </div>
-        </Link>
+        </Card>
       ))}
     </div>
   );

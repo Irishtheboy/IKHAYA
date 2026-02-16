@@ -125,25 +125,25 @@ const RegisterForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-5">
       {/* Success Message */}
       {successMessage && (
-        <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded">
+        <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm font-light">
           {successMessage}
         </div>
       )}
 
       {/* General Error */}
       {errors.general && (
-        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded">
+        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg text-sm font-light">
           {errors.general}
         </div>
       )}
 
       {/* Name Field */}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-          Full Name *
+        <label htmlFor="name" className="block text-sm font-light text-slate-700 mb-2">
+          Full Name
         </label>
         <input
           type="text"
@@ -151,18 +151,19 @@ const RegisterForm: React.FC = () => {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className={`mt-1 block w-full px-3 py-2 border ${
+          className={`block w-full px-4 py-3 border ${
             errors.name ? 'border-red-300' : 'border-gray-300'
-          } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+          } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all font-light`}
           disabled={isLoading}
+          placeholder="John Doe"
         />
-        {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
+        {errors.name && <p className="mt-2 text-sm text-red-600 font-light">{errors.name}</p>}
       </div>
 
       {/* Email Field */}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-          Email Address *
+        <label htmlFor="email" className="block text-sm font-light text-slate-700 mb-2">
+          Email Address
         </label>
         <input
           type="email"
@@ -170,47 +171,48 @@ const RegisterForm: React.FC = () => {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          className={`mt-1 block w-full px-3 py-2 border ${
+          className={`block w-full px-4 py-3 border ${
             errors.email ? 'border-red-300' : 'border-gray-300'
-          } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+          } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all font-light`}
           disabled={isLoading}
+          placeholder="your@email.com"
         />
-        {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+        {errors.email && <p className="mt-2 text-sm text-red-600 font-light">{errors.email}</p>}
       </div>
 
       {/* Role Selection */}
       <div>
-        <label htmlFor="role" className="block text-sm font-medium text-gray-700">
-          I am a *
+        <label htmlFor="role" className="block text-sm font-light text-slate-700 mb-2">
+          I am a
         </label>
         <select
           id="role"
           name="role"
           value={formData.role}
           onChange={handleChange}
-          className={`mt-1 block w-full px-3 py-2 border ${
+          className={`block w-full px-4 py-3 border ${
             errors.role ? 'border-red-300' : 'border-gray-300'
-          } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+          } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all font-light`}
           disabled={isLoading}
         >
           <option value="">Select your role</option>
           <option value="tenant">Tenant (I'm looking for a property)</option>
         </select>
-        {errors.role && <p className="mt-1 text-sm text-red-600">{errors.role}</p>}
+        {errors.role && <p className="mt-2 text-sm text-red-600 font-light">{errors.role}</p>}
 
         {/* Info Notice */}
-        <div className="mt-2 bg-blue-50 border border-blue-200 rounded-md p-3">
-          <p className="text-sm text-blue-800">
-            <strong>Are you a landlord?</strong> Landlord accounts are created by our admin team.
-            Please contact us at info@ikhayarent.co.za to get started.
+        <div className="mt-3 bg-cyan-50 border border-cyan-200 rounded-lg p-3">
+          <p className="text-sm text-cyan-900 font-light">
+            <span className="font-medium">Are you a landlord?</span> Landlord accounts are created by our admin team.
+            Contact us at info@ikhayarent.co.za
           </p>
         </div>
       </div>
 
       {/* Phone Field (Optional) */}
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-          Phone Number (Optional)
+        <label htmlFor="phone" className="block text-sm font-light text-slate-700 mb-2">
+          Phone Number <span className="text-slate-400">(Optional)</span>
         </label>
         <input
           type="tel"
@@ -219,18 +221,18 @@ const RegisterForm: React.FC = () => {
           value={formData.phone}
           onChange={handleChange}
           placeholder="+27 12 345 6789"
-          className={`mt-1 block w-full px-3 py-2 border ${
+          className={`block w-full px-4 py-3 border ${
             errors.phone ? 'border-red-300' : 'border-gray-300'
-          } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+          } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all font-light`}
           disabled={isLoading}
         />
-        {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
+        {errors.phone && <p className="mt-2 text-sm text-red-600 font-light">{errors.phone}</p>}
       </div>
 
       {/* Password Field */}
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-          Password *
+        <label htmlFor="password" className="block text-sm font-light text-slate-700 mb-2">
+          Password
         </label>
         <input
           type="password"
@@ -238,21 +240,22 @@ const RegisterForm: React.FC = () => {
           name="password"
           value={formData.password}
           onChange={handleChange}
-          className={`mt-1 block w-full px-3 py-2 border ${
+          className={`block w-full px-4 py-3 border ${
             errors.password ? 'border-red-300' : 'border-gray-300'
-          } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+          } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all font-light`}
           disabled={isLoading}
+          placeholder="Create a strong password"
         />
-        {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
-        <p className="mt-1 text-xs text-gray-500">
-          Must be at least 8 characters with uppercase, lowercase, and number
+        {errors.password && <p className="mt-2 text-sm text-red-600 font-light">{errors.password}</p>}
+        <p className="mt-2 text-xs text-slate-500 font-light">
+          At least 8 characters with uppercase, lowercase, and number
         </p>
       </div>
 
       {/* Confirm Password Field */}
       <div>
-        <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-          Confirm Password *
+        <label htmlFor="confirmPassword" className="block text-sm font-light text-slate-700 mb-2">
+          Confirm Password
         </label>
         <input
           type="password"
@@ -260,13 +263,14 @@ const RegisterForm: React.FC = () => {
           name="confirmPassword"
           value={formData.confirmPassword}
           onChange={handleChange}
-          className={`mt-1 block w-full px-3 py-2 border ${
+          className={`block w-full px-4 py-3 border ${
             errors.confirmPassword ? 'border-red-300' : 'border-gray-300'
-          } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+          } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all font-light`}
           disabled={isLoading}
+          placeholder="Re-enter your password"
         />
         {errors.confirmPassword && (
-          <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
+          <p className="mt-2 text-sm text-red-600 font-light">{errors.confirmPassword}</p>
         )}
       </div>
 
@@ -274,22 +278,40 @@ const RegisterForm: React.FC = () => {
       <button
         type="submit"
         disabled={isLoading}
-        className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+        className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white transition-all ${
           isLoading
-            ? 'bg-blue-400 cursor-not-allowed'
-            : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+            ? 'bg-cyan-400 cursor-not-allowed'
+            : 'bg-cyan-500 hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500'
         }`}
       >
-        {isLoading ? 'Creating Account...' : 'Create Account'}
+        {isLoading ? (
+          <span className="flex items-center">
+            <svg
+              className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
+            </svg>
+            Creating Account...
+          </span>
+        ) : (
+          'Create Account'
+        )}
       </button>
-
-      {/* Login Link */}
-      <div className="text-center text-sm">
-        <span className="text-gray-600">Already have an account? </span>
-        <Link to="/login" className="text-blue-600 hover:text-blue-500 font-medium">
-          Sign in
-        </Link>
-      </div>
     </form>
   );
 };

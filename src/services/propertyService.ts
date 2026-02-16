@@ -248,14 +248,6 @@ class PropertyService {
       // Only show available properties in search
       constraints.push(where('status', '==', 'available'));
 
-      // Location filter (city or province)
-      if (location) {
-        // Try to match city first, then province
-        // Note: Firestore doesn't support OR queries directly, so we'll filter by city
-        // In a production app, you might want to use Algolia or similar for better search
-        constraints.push(where('city', '==', location));
-      }
-
       // Property type filter
       if (propertyType) {
         constraints.push(where('propertyType', '==', propertyType));
@@ -287,24 +279,20 @@ class PropertyService {
         constraints.push(orderBy('rentAmount', 'asc'));
       } else if (sortBy === 'date') {
         constraints.push(orderBy('createdAt', 'desc'));
-      } else {
-        // Relevance: sort by view count and date
-        constraints.push(orderBy('viewCount', 'desc'));
-        constraints.push(orderBy('createdAt', 'desc'));
       }
 
       // Create query
       const propertiesQuery = query(
         collection(db, COLLECTIONS.PROPERTIES),
         ...constraints,
-        limit(pageLimit)
+        limit(pageLimit * 2) // Fetch more to allow for client-side filtering
       );
 
       // Execute query
       const querySnapshot = await getDocs(propertiesQuery);
 
       // Map results to Property objects
-      const properties: Property[] = querySnapshot.docs.map((doc) => {
+      let properties: Property[] = querySnapshot.docs.map((doc) => {
         const data = doc.data() as Omit<Property, 'id'>;
         return {
           id: doc.id,
@@ -312,9 +300,21 @@ class PropertyService {
         };
       });
 
+      // Client-side location filtering (case-insensitive partial match)
+      if (location) {
+        const searchTerm = location.toLowerCase().trim();
+        properties = properties.filter((property) => {
+          const cityMatch = property.city?.toLowerCase().includes(searchTerm);
+          const provinceMatch = property.province?.toLowerCase().includes(searchTerm);
+          const addressMatch = property.address?.toLowerCase().includes(searchTerm);
+          return cityMatch || provinceMatch || addressMatch;
+        });
+      }
+
+      // Limit results to page size
+      properties = properties.slice(0, pageLimit);
+
       // Calculate pagination info
-      // Note: Getting total count is expensive in Firestore
-      // In production, consider maintaining a counter or using aggregation
       const total = properties.length;
       const totalPages = Math.ceil(total / pageLimit);
 

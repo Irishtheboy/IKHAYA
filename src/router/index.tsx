@@ -1,25 +1,39 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ProtectedRoute from '../components/auth/ProtectedRoute';
+
+// Eager load critical pages (Home, Login, Register)
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
-import ForgotPassword from '../pages/ForgotPassword';
-import Dashboard from '../pages/Dashboard';
-import PropertySearch from '../pages/PropertySearch';
-import PropertyDetail from '../pages/PropertyDetail';
-import PropertyCreate from '../pages/PropertyCreate';
-import PropertiesManage from '../pages/PropertiesManage';
-import LeadCreate from '../pages/LeadCreate';
-import LeadDetail from '../pages/LeadDetail';
-import Leads from '../pages/Leads';
-import Leases from '../pages/Leases';
-import Maintenance from '../pages/Maintenance';
-import Payments from '../pages/Payments';
-import InvoiceDetail from '../pages/InvoiceDetail';
-import PaymentRecord from '../pages/PaymentRecord';
-import AdminLandlords from '../pages/AdminLandlords';
-import AdminUsers from '../pages/AdminUsers';
-import ProtectedRoute from '../components/auth/ProtectedRoute';
+
+// Lazy load all other pages
+const ForgotPassword = lazy(() => import('../pages/ForgotPassword'));
+const Dashboard = lazy(() => import('../pages/Dashboard'));
+const PropertySearch = lazy(() => import('../pages/PropertySearch'));
+const PropertyDetail = lazy(() => import('../pages/PropertyDetail'));
+const PropertyCreate = lazy(() => import('../pages/PropertyCreate'));
+const PropertiesManage = lazy(() => import('../pages/PropertiesManage'));
+const LeadCreate = lazy(() => import('../pages/LeadCreate'));
+const LeadDetail = lazy(() => import('../pages/LeadDetail'));
+const Leads = lazy(() => import('../pages/Leads'));
+const Leases = lazy(() => import('../pages/Leases'));
+const Maintenance = lazy(() => import('../pages/Maintenance'));
+const Payments = lazy(() => import('../pages/Payments'));
+const InvoiceDetail = lazy(() => import('../pages/InvoiceDetail'));
+const PaymentRecord = lazy(() => import('../pages/PaymentRecord'));
+const AdminLandlords = lazy(() => import('../pages/AdminLandlords'));
+const AdminUsers = lazy(() => import('../pages/AdminUsers'));
+
+// Loading component
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="text-center">
+      <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500"></div>
+      <p className="mt-4 text-gray-600 font-light">Loading...</p>
+    </div>
+  </div>
+);
 
 const router = createBrowserRouter([
   {
@@ -36,122 +50,164 @@ const router = createBrowserRouter([
   },
   {
     path: '/forgot-password',
-    element: <ForgotPassword />,
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <ForgotPassword />
+      </Suspense>
+    ),
   },
   {
     path: '/dashboard',
     element: (
-      <ProtectedRoute>
-        <Dashboard />
-      </ProtectedRoute>
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <Dashboard />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
     path: '/search',
-    element: <PropertySearch />,
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <PropertySearch />
+      </Suspense>
+    ),
   },
   {
     path: '/properties/create',
     element: (
-      <ProtectedRoute>
-        <PropertyCreate />
-      </ProtectedRoute>
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <PropertyCreate />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
     path: '/properties/manage',
     element: (
-      <ProtectedRoute>
-        <PropertiesManage />
-      </ProtectedRoute>
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <PropertiesManage />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
     path: '/properties/:propertyId',
-    element: <PropertyDetail />,
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <PropertyDetail />
+      </Suspense>
+    ),
   },
   {
     path: '/properties/:propertyId/:slug',
-    element: <PropertyDetail />,
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <PropertyDetail />
+      </Suspense>
+    ),
   },
   {
     path: '/leads',
     element: (
-      <ProtectedRoute>
-        <Leads />
-      </ProtectedRoute>
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <Leads />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
     path: '/leads/create',
     element: (
-      <ProtectedRoute>
-        <LeadCreate />
-      </ProtectedRoute>
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <LeadCreate />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
     path: '/leads/:leadId',
     element: (
-      <ProtectedRoute>
-        <LeadDetail />
-      </ProtectedRoute>
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <LeadDetail />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
     path: '/leases',
     element: (
-      <ProtectedRoute>
-        <Leases />
-      </ProtectedRoute>
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <Leases />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
     path: '/maintenance',
     element: (
-      <ProtectedRoute>
-        <Maintenance />
-      </ProtectedRoute>
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <Maintenance />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
     path: '/payments',
     element: (
-      <ProtectedRoute>
-        <Payments />
-      </ProtectedRoute>
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <Payments />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
     path: '/invoices/:invoiceId',
     element: (
-      <ProtectedRoute>
-        <InvoiceDetail />
-      </ProtectedRoute>
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <InvoiceDetail />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
     path: '/payments/record/:invoiceId',
     element: (
-      <ProtectedRoute>
-        <PaymentRecord />
-      </ProtectedRoute>
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <PaymentRecord />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
     path: '/admin/landlords',
     element: (
-      <ProtectedRoute>
-        <AdminLandlords />
-      </ProtectedRoute>
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <AdminLandlords />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
   {
     path: '/admin/users',
     element: (
-      <ProtectedRoute>
-        <AdminUsers />
-      </ProtectedRoute>
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <AdminUsers />
+        </ProtectedRoute>
+      </Suspense>
     ),
   },
 ]);

@@ -51,6 +51,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
     if (formData.bathrooms < 0) newErrors.bathrooms = 'Bathrooms must be non-negative';
     if (formData.rentAmount <= 0) newErrors.rentAmount = 'Rent amount must be greater than zero';
     if (formData.deposit < 0) newErrors.deposit = 'Deposit must be non-negative';
+    if (formData.deposit > 5000) newErrors.deposit = 'Deposit cannot exceed R5,000';
     if (!formData.description.trim()) newErrors.description = 'Description is required';
 
     setErrors(newErrors);
@@ -289,13 +290,14 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
           {/* Deposit */}
           <div>
             <label htmlFor="deposit" className="block text-sm font-medium text-gray-700">
-              Deposit (R) *
+              Deposit (R) * <span className="text-xs text-gray-500">(Maximum R5,000)</span>
             </label>
             <input
               type="number"
               id="deposit"
               name="deposit"
               min="0"
+              max="5000"
               value={formData.deposit}
               onChange={handleChange}
               className={`mt-1 block w-full px-3 py-2 border ${

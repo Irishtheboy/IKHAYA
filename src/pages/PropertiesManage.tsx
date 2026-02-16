@@ -58,38 +58,43 @@ const PropertiesManage: React.FC = () => {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">My Properties</h1>
-            <p className="mt-2 text-sm text-gray-600">
-              Manage your property listings and track their status
-            </p>
-          </div>
-          <Link
-            to="/properties/create"
-            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-          >
-            <svg
-              className="-ml-1 mr-2 h-5 w-5"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
+      {/* Hero Header */}
+      <div className="bg-slate-900 border-b border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h1 className="text-4xl font-light text-white tracking-tight">My Properties</h1>
+              <p className="mt-3 text-slate-400 font-light text-lg">
+                Manage your property listings and track their status
+              </p>
+            </div>
+            <Link
+              to="/properties/create"
+              className="inline-flex items-center px-6 py-3 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-cyan-500 hover:bg-cyan-600 transition-colors"
             >
-              <path
-                fillRule="evenodd"
-                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-            New Property
-          </Link>
+              <svg
+                className="-ml-1 mr-2 h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              New Property
+            </Link>
+          </div>
         </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {/* Error Message */}
         {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded">
+          <div className="mb-6 bg-red-50 border border-red-200 text-red-800 px-6 py-4 rounded-lg font-light">
             {error}
           </div>
         )}
@@ -97,12 +102,12 @@ const PropertiesManage: React.FC = () => {
         {/* Stats */}
         {!isLoading && properties.length > 0 && (
           <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
-            <div className="bg-white overflow-hidden shadow rounded-lg">
-              <div className="p-5">
+            <div className="bg-white overflow-hidden shadow-sm rounded-lg border border-slate-200">
+              <div className="p-6">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
                     <svg
-                      className="h-6 w-6 text-gray-400"
+                      className="h-6 w-6 text-slate-400"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -117,18 +122,18 @@ const PropertiesManage: React.FC = () => {
                   </div>
                   <div className="ml-5 w-0 flex-1">
                     <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">
+                      <dt className="text-sm font-light text-slate-500 truncate">
                         Total Properties
                       </dt>
-                      <dd className="text-lg font-semibold text-gray-900">{properties.length}</dd>
+                      <dd className="text-lg font-light text-slate-900">{properties.length}</dd>
                     </dl>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white overflow-hidden shadow rounded-lg">
-              <div className="p-5">
+            <div className="bg-white overflow-hidden shadow-sm rounded-lg border border-slate-200">
+              <div className="p-6">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
                     <svg
@@ -147,8 +152,8 @@ const PropertiesManage: React.FC = () => {
                   </div>
                   <div className="ml-5 w-0 flex-1">
                     <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">Available</dt>
-                      <dd className="text-lg font-semibold text-gray-900">
+                      <dt className="text-sm font-light text-slate-500 truncate">Available</dt>
+                      <dd className="text-lg font-light text-slate-900">
                         {properties.filter((p) => p.status === 'available').length}
                       </dd>
                     </dl>
@@ -157,12 +162,12 @@ const PropertiesManage: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white overflow-hidden shadow rounded-lg">
-              <div className="p-5">
+            <div className="bg-white overflow-hidden shadow-sm rounded-lg border border-slate-200">
+              <div className="p-6">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
                     <svg
-                      className="h-6 w-6 text-blue-400"
+                      className="h-6 w-6 text-cyan-400"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -177,8 +182,8 @@ const PropertiesManage: React.FC = () => {
                   </div>
                   <div className="ml-5 w-0 flex-1">
                     <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">Occupied</dt>
-                      <dd className="text-lg font-semibold text-gray-900">
+                      <dt className="text-sm font-light text-slate-500 truncate">Occupied</dt>
+                      <dd className="text-lg font-light text-slate-900">
                         {properties.filter((p) => p.status === 'occupied').length}
                       </dd>
                     </dl>
