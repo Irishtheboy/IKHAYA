@@ -32,9 +32,9 @@ const Login: React.FC = () => {
           {/* Logo */}
           <div className="text-center mb-8">
             <Link to="/" className="inline-block">
-              <img 
-                src="/website-removebg-preview.png" 
-                alt="IKHAYA Properties" 
+              <img
+                src="/website-removebg-preview.png"
+                alt="IKHAYA Properties"
                 className="h-48 w-auto mx-auto"
               />
             </Link>

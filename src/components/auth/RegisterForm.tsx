@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { authService, RegisterDTO } from '../../services/authService';
 import { UserRole } from '../../types/firebase';
 
@@ -203,8 +203,8 @@ const RegisterForm: React.FC = () => {
         {/* Info Notice */}
         <div className="mt-3 bg-cyan-50 border border-cyan-200 rounded-lg p-3">
           <p className="text-sm text-cyan-900 font-light">
-            <span className="font-medium">Are you a landlord?</span> Landlord accounts are created by our admin team.
-            Contact us at info@ikhayarent.co.za
+            <span className="font-medium">Are you a landlord?</span> Landlord accounts are created
+            by our admin team. Contact us at info@ikhayarent.co.za
           </p>
         </div>
       </div>
@@ -246,7 +246,9 @@ const RegisterForm: React.FC = () => {
           disabled={isLoading}
           placeholder="Create a strong password"
         />
-        {errors.password && <p className="mt-2 text-sm text-red-600 font-light">{errors.password}</p>}
+        {errors.password && (
+          <p className="mt-2 text-sm text-red-600 font-light">{errors.password}</p>
+        )}
         <p className="mt-2 text-xs text-slate-500 font-light">
           At least 8 characters with uppercase, lowercase, and number
         </p>

@@ -104,9 +104,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
             {/* Right side - Logo */}
             <Link to="/" className="flex items-center">
-              <img 
-                src="/website-removebg-preview.png" 
-                alt="IKHAYA Properties" 
+              <img
+                src="/website-removebg-preview.png"
+                alt="IKHAYA Properties"
                 className="h-16 w-auto"
               />
             </Link>
@@ -235,17 +235,26 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               <h3 className="text-lg font-semibold mb-4 tracking-wide">Quick Links</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link to="/search" className="text-gray-400 hover:text-white font-light transition-colors">
+                  <Link
+                    to="/search"
+                    className="text-gray-400 hover:text-white font-light transition-colors"
+                  >
                     Search Properties
                   </Link>
                 </li>
                 <li>
-                  <Link to="/register" className="text-gray-400 hover:text-white font-light transition-colors">
+                  <Link
+                    to="/register"
+                    className="text-gray-400 hover:text-white font-light transition-colors"
+                  >
                     List Your Property
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about" className="text-gray-400 hover:text-white font-light transition-colors">
+                  <Link
+                    to="/about"
+                    className="text-gray-400 hover:text-white font-light transition-colors"
+                  >
                     About Us
                   </Link>
                 </li>

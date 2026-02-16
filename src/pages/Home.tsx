@@ -140,7 +140,10 @@ const Home: React.FC = () => {
         {/* Search Bar */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-full max-w-4xl px-4">
           <Card className="bg-white/95 backdrop-blur-sm border-0 shadow-2xl">
-            <form onSubmit={handleSearch} className="flex flex-col md:flex-row items-center gap-4 p-6">
+            <form
+              onSubmit={handleSearch}
+              className="flex flex-col md:flex-row items-center gap-4 p-6"
+            >
               <div className="flex-1 w-full relative">
                 <input
                   type="text"

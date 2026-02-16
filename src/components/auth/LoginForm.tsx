@@ -122,7 +122,9 @@ const LoginForm: React.FC = () => {
           autoComplete="current-password"
           placeholder="Enter your password"
         />
-        {errors.password && <p className="mt-2 text-sm text-red-600 font-light">{errors.password}</p>}
+        {errors.password && (
+          <p className="mt-2 text-sm text-red-600 font-light">{errors.password}</p>
+        )}
       </div>
 
       {/* Forgot Password Link */}

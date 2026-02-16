@@ -91,7 +91,6 @@ const PropertiesManage: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
         {/* Error Message */}
         {error && (
           <div className="mb-6 bg-red-50 border border-red-200 text-red-800 px-6 py-4 rounded-lg font-light">

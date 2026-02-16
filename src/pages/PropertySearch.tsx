@@ -270,7 +270,12 @@ const PropertySearch: React.FC = () => {
             >
               Search Properties
             </Button>
-            <Button onClick={handleReset} variant="outline" size="lg" className="sm:w-auto font-light">
+            <Button
+              onClick={handleReset}
+              variant="outline"
+              size="lg"
+              className="sm:w-auto font-light"
+            >
               Reset Filters
             </Button>
           </div>
@@ -306,7 +311,9 @@ const PropertySearch: React.FC = () => {
         {!isLoading && properties.length === 0 && (
           <Card className="text-center py-16 bg-white/95 backdrop-blur-sm">
             <SearchIcon size="xl" className="mx-auto text-slate-400 mb-4" />
-            <h3 className="text-xl font-light text-slate-900 mb-2 tracking-tight">No properties found</h3>
+            <h3 className="text-xl font-light text-slate-900 mb-2 tracking-tight">
+              No properties found
+            </h3>
             <p className="text-slate-600 font-light mb-6">
               Try adjusting your search criteria to find more results.
             </p>

@@ -32,9 +32,9 @@ const Register: React.FC = () => {
           {/* Logo */}
           <div className="text-center mb-8">
             <Link to="/" className="inline-block">
-              <img 
-                src="/website-removebg-preview.png" 
-                alt="IKHAYA Properties" 
+              <img
+                src="/website-removebg-preview.png"
+                alt="IKHAYA Properties"
                 className="h-48 w-auto mx-auto"
               />
             </Link>
@@ -47,9 +47,7 @@ const Register: React.FC = () => {
               <h2 className="text-3xl sm:text-4xl font-light text-slate-900 tracking-tight">
                 Create Account
               </h2>
-              <p className="mt-3 text-sm text-slate-600 font-light">
-                Join IKHAYA Properties today
-              </p>
+              <p className="mt-3 text-sm text-slate-600 font-light">Join IKHAYA Properties today</p>
             </div>
 
             <RegisterForm />
