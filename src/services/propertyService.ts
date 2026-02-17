@@ -36,6 +36,16 @@ export interface PropertyDTO {
   description: string;
   amenities: string[];
   availableFrom: Date;
+  // Additional property details
+  ratesAndTaxes?: number;
+  garages?: number;
+  parking?: number;
+  hasGarden?: boolean;
+  nearbySchools?: Array<{ name: string; distance: string }>;
+  nearbyRestaurants?: Array<{ name: string; distance: string }>;
+  nearbyTransport?: Array<{ name: string; distance: string }>;
+  latitude?: number;
+  longitude?: number;
 }
 
 /**
@@ -103,6 +113,16 @@ class PropertyService {
         isPremium: false,
         images: [],
         viewCount: 0,
+        // Additional property details
+        ratesAndTaxes: propertyData.ratesAndTaxes,
+        garages: propertyData.garages,
+        parking: propertyData.parking,
+        hasGarden: propertyData.hasGarden,
+        nearbySchools: propertyData.nearbySchools,
+        nearbyRestaurants: propertyData.nearbyRestaurants,
+        nearbyTransport: propertyData.nearbyTransport,
+        latitude: propertyData.latitude,
+        longitude: propertyData.longitude,
         createdAt: serverTimestamp() as any,
         updatedAt: serverTimestamp() as any,
       };

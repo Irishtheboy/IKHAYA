@@ -78,7 +78,31 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               {currentUser ? (
                 <>
                   <NotificationDropdown />
-                  <span className="text-gray-300 text-sm font-light">{userProfile?.email}</span>
+                  
+                  {/* User Profile Section */}
+                  <div className="flex items-center space-x-3">
+                    {userProfile?.profileImage ? (
+                      <img
+                        src={userProfile.profileImage}
+                        alt={userProfile.name}
+                        className="h-8 w-8 rounded-full object-cover border-2 border-cyan-500"
+                      />
+                    ) : (
+                      <div className="h-8 w-8 rounded-full bg-gray-600 flex items-center justify-center border-2 border-cyan-500">
+                        <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                      </div>
+                    )}
+                    <span className="text-gray-300 text-sm font-light">{userProfile?.name || userProfile?.email}</span>
+                  </div>
+                  
+                  <Link
+                    to="/profile/settings"
+                    className="text-gray-300 hover:text-white px-3 py-2 text-sm font-light tracking-wide transition-colors"
+                  >
+                    Profile
+                  </Link>
                   <Link
                     to="/dashboard"
                     className="bg-cyan-500 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-cyan-600 transition-colors"
@@ -178,6 +202,12 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                     className="block px-3 py-2 rounded-md text-base font-light text-gray-300 hover:text-white hover:bg-slate-700"
                   >
                     Maintenance
+                  </Link>
+                  <Link
+                    to="/profile/settings"
+                    className="block px-3 py-2 rounded-md text-base font-light text-gray-300 hover:text-white hover:bg-slate-700"
+                  >
+                    Profile Settings
                   </Link>
                   <Link
                     to="/dashboard"

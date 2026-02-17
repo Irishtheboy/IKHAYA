@@ -39,6 +39,11 @@ class CloudinaryService {
    */
   async uploadImage(file: File, folder: string = 'ikhaya'): Promise<string> {
     try {
+      // Validate configuration
+      if (!this.cloudName || !this.uploadPreset) {
+        throw new Error('Cloudinary is not configured. Please check your environment variables.');
+      }
+
       // Validate image
       this.validateImage(file);
 
@@ -48,18 +53,42 @@ class CloudinaryService {
       formData.append('upload_preset', this.uploadPreset);
       formData.append('folder', folder);
 
+      console.log('Uploading to Cloudinary:', {
+        cloudName: this.cloudName,
+        uploadPreset: this.uploadPreset,
+        folder: folder,
+        fileName: file.name,
+        fileSize: this.getFileSizeInMB(file.size).toFixed(2) + 'MB',
+      });
+
       // Upload to Cloudinary
       const response = await axios.post(this.uploadUrl, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        timeout: 30000, // 30 second timeout
       });
+
+      console.log('Upload successful:', response.data.secure_url);
 
       // Return secure URL
       return response.data.secure_url;
     } catch (error: any) {
       console.error('Error uploading image to Cloudinary:', error);
-      throw new Error(`Failed to upload image: ${error.message}`);
+      
+      // Provide more specific error messages
+      if (error.code === 'ERR_NETWORK') {
+        throw new Error('Network error. Please check your internet connection and try again.');
+      } else if (error.response) {
+        // Cloudinary returned an error response
+        const message = error.response.data?.error?.message || 'Upload failed';
+        throw new Error(`Cloudinary error: ${message}`);
+      } else if (error.request) {
+        // Request was made but no response received
+        throw new Error('No response from Cloudinary. Please check your internet connection.');
+      } else {
+        throw new Error(`Failed to upload image: ${error.message}`);
+      }
     }
   }
 

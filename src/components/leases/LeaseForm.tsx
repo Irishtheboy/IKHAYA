@@ -137,25 +137,23 @@ const LeaseForm: React.FC<LeaseFormProps> = ({
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-6">Create Lease Agreement</h2>
-
+    <div className="max-w-3xl mx-auto">
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div className="bg-red-50 border border-red-200 text-red-800 px-6 py-4 rounded-lg mb-6 font-light">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        <div className="bg-green-50 border border-green-200 text-green-800 px-6 py-4 rounded-lg mb-6 font-light">
           Lease created successfully! Redirecting...
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6 bg-white rounded-lg shadow-sm border border-slate-200 p-8">
         {/* Property Selection */}
         <div>
-          <label htmlFor="propertyId" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="propertyId" className="block text-sm font-light text-slate-700 mb-2">
             Property *
           </label>
           <select
@@ -164,7 +162,7 @@ const LeaseForm: React.FC<LeaseFormProps> = ({
             value={formData.propertyId}
             onChange={handleChange}
             disabled={!!initialPropertyId}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent font-light"
             required
           >
             <option value="">Select a property</option>
@@ -178,7 +176,7 @@ const LeaseForm: React.FC<LeaseFormProps> = ({
 
         {/* Tenant ID */}
         <div>
-          <label htmlFor="tenantId" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="tenantId" className="block text-sm font-light text-slate-700 mb-2">
             Tenant ID *
           </label>
           <input
@@ -188,18 +186,18 @@ const LeaseForm: React.FC<LeaseFormProps> = ({
             value={formData.tenantId}
             onChange={handleChange}
             disabled={!!initialTenantId}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent font-light"
             placeholder="Enter tenant user ID"
             required
           />
-          <p className="text-sm text-gray-500 mt-1">
-            The unique ID of the tenant (from their user profile)
+          <p className="text-sm text-slate-500 mt-2 font-light">
+            The unique ID of the tenant from their user profile
           </p>
         </div>
 
         {/* Rent Amount */}
         <div>
-          <label htmlFor="rentAmount" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="rentAmount" className="block text-sm font-light text-slate-700 mb-2">
             Monthly Rent Amount (R) *
           </label>
           <input
@@ -208,7 +206,7 @@ const LeaseForm: React.FC<LeaseFormProps> = ({
             name="rentAmount"
             value={formData.rentAmount}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent font-light"
             placeholder="5000"
             min="0"
             step="0.01"
@@ -218,8 +216,8 @@ const LeaseForm: React.FC<LeaseFormProps> = ({
 
         {/* Deposit */}
         <div>
-          <label htmlFor="deposit" className="block text-sm font-medium text-gray-700 mb-2">
-            Deposit Amount (R) * <span className="text-xs text-gray-500">(Maximum R5,000)</span>
+          <label htmlFor="deposit" className="block text-sm font-light text-slate-700 mb-2">
+            Deposit Amount (R) * <span className="text-xs text-slate-500">(Maximum R5,000)</span>
           </label>
           <input
             type="number"
@@ -230,7 +228,7 @@ const LeaseForm: React.FC<LeaseFormProps> = ({
             step="0.01"
             value={formData.deposit}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent font-light"
             placeholder="5000"
             required
           />
@@ -238,7 +236,7 @@ const LeaseForm: React.FC<LeaseFormProps> = ({
 
         {/* Start Date */}
         <div>
-          <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="startDate" className="block text-sm font-light text-slate-700 mb-2">
             Start Date *
           </label>
           <input
@@ -247,14 +245,14 @@ const LeaseForm: React.FC<LeaseFormProps> = ({
             name="startDate"
             value={formData.startDate}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent font-light"
             required
           />
         </div>
 
         {/* End Date */}
         <div>
-          <label htmlFor="endDate" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="endDate" className="block text-sm font-light text-slate-700 mb-2">
             End Date *
           </label>
           <input
@@ -263,14 +261,14 @@ const LeaseForm: React.FC<LeaseFormProps> = ({
             name="endDate"
             value={formData.endDate}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent font-light"
             required
           />
         </div>
 
         {/* Terms */}
         <div>
-          <label htmlFor="terms" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="terms" className="block text-sm font-light text-slate-700 mb-2">
             Lease Terms and Conditions *
           </label>
           <textarea
@@ -279,30 +277,30 @@ const LeaseForm: React.FC<LeaseFormProps> = ({
             value={formData.terms}
             onChange={handleChange}
             rows={10}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent font-light"
             placeholder="Enter the complete lease terms and conditions..."
             required
           />
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-slate-500 mt-2 font-light">
             Include all terms, conditions, rules, and responsibilities
           </p>
         </div>
 
         {/* Submit Button */}
-        <div className="flex gap-4">
+        <div className="flex gap-4 pt-4">
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="flex-1 bg-slate-900 text-white py-3 px-6 rounded-lg hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 disabled:bg-slate-400 disabled:cursor-not-allowed font-light tracking-wide transition-colors"
           >
-            {loading ? 'Creating Lease...' : 'Create Lease'}
+            {loading ? 'CREATING LEASE...' : 'CREATE LEASE'}
           </button>
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500"
+            className="flex-1 bg-slate-100 text-slate-700 py-3 px-6 rounded-lg hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-500 font-light tracking-wide transition-colors"
           >
-            Cancel
+            CANCEL
           </button>
         </div>
       </form>

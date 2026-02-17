@@ -10,6 +10,7 @@ export interface User {
   name: string;
   role: UserRole;
   phone?: string;
+  profileImage?: string; // URL to profile image
   emailVerified: boolean;
   approved?: boolean; // For landlords - requires admin approval before they can use the platform
   approvedBy?: string; // Admin user ID who approved the landlord
@@ -22,6 +23,11 @@ export interface User {
 // Property types
 export type PropertyType = 'apartment' | 'house' | 'townhouse' | 'room';
 export type PropertyStatus = 'available' | 'occupied' | 'inactive';
+
+export interface NearbyPlace {
+  name: string;
+  distance: string;
+}
 
 export interface Property {
   id: string;
@@ -42,6 +48,16 @@ export interface Property {
   isPremium: boolean;
   images: string[];
   viewCount: number;
+  // Additional property details
+  ratesAndTaxes?: number;
+  garages?: number;
+  parking?: number;
+  hasGarden?: boolean;
+  nearbySchools?: NearbyPlace[];
+  nearbyRestaurants?: NearbyPlace[];
+  nearbyTransport?: NearbyPlace[];
+  latitude?: number;
+  longitude?: number;
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }

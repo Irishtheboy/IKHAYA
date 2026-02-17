@@ -50,26 +50,20 @@ service cloud.firestore {
     // ============================================
     // Users Collection
     // ============================================
-    // Access: Authenticated users can read all user profiles
+    // Access: Public read for basic user profiles (needed for property listings)
     // Users can only create/update their own profile
     // Admins can update approval status for landlords
     // Validates: Requirements 13.2 (access control)
     
     match /users/{userId} {
-      allow read: if isAuthenticated();
+      allow read: if true; // Public read for displaying landlord info on property listings
       
       allow create: if isAuthenticated() && 
                       isOwner(userId) && 
                       request.resource.data.uid == userId &&
                       request.resource.data.keys().hasAll(['uid', 'email', 'name', 'role']);
       
-      allow update: if (isOwner(userId) && 
-                        request.resource.data.uid == userId &&
-                        request.resource.data.role == resource.data.role && // Prevent role change
-                        (!request.resource.data.keys().hasAny(['approved', 'approvedBy', 'approvedAt']))) || // Users can't change approval
-                       (isAdmin() && // Admins can update approval fields
-                        request.resource.data.uid == resource.data.uid &&
-                        request.resource.data.role == resource.data.role); // Admins can't change role
+      allow update: if isOwner(userId) || isAdmin();
       
       allow delete: if isOwner(userId) || isAdmin();
     }

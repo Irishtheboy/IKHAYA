@@ -95,37 +95,24 @@ const PropertySearch: React.FC = () => {
   return (
     <Layout>
       {/* Hero Section with Background */}
-      <div className="relative min-h-[400px] overflow-hidden">
+      <div className="relative min-h-[300px] overflow-hidden bg-slate-900">
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
             src="/hero-background.jpg"
             alt="IKHAYA Properties"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-20"
           />
-          {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-slate-900/80"></div>
-        </div>
-
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)`,
-              backgroundSize: '20px 20px',
-            }}
-          ></div>
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
           <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white mb-6 tracking-tight">
-              FIND YOUR PERFECT HOME
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-white mb-4 tracking-tight">
+              PROPERTY SEARCH
             </h1>
-            <p className="text-xl sm:text-2xl text-white/90 font-light max-w-3xl mx-auto">
-              Discover quality rental properties across South Africa
+            <p className="text-lg sm:text-xl text-white/80 font-light max-w-2xl mx-auto">
+              Browse available properties across South Africa
             </p>
           </div>
         </div>
@@ -133,10 +120,10 @@ const PropertySearch: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search Filters */}
-        <Card className="mb-8 -mt-16 relative z-10 bg-white/95 backdrop-blur-sm" shadow="xl">
+        <Card className="mb-8 bg-white" shadow="sm">
           <div className="flex items-center mb-6">
             <FilterIcon className="text-slate-600 mr-3" size="lg" />
-            <h2 className="text-xl font-light text-slate-900 tracking-tight">Search Filters</h2>
+            <h2 className="text-xl font-light text-slate-900 tracking-tight">Refine Search</h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -266,33 +253,33 @@ const PropertySearch: React.FC = () => {
               loading={isLoading}
               leftIcon={SearchIcon}
               size="lg"
-              className="flex-1 bg-cyan-500 hover:bg-cyan-600 text-white font-medium"
+              className="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-light tracking-wide"
             >
-              Search Properties
+              SEARCH
             </Button>
             <Button
               onClick={handleReset}
               variant="outline"
               size="lg"
-              className="sm:w-auto font-light"
+              className="sm:w-auto font-light border-slate-300 text-slate-700 hover:bg-slate-50"
             >
-              Reset Filters
+              RESET
             </Button>
           </div>
         </Card>
 
         {/* Error Message */}
         {error && (
-          <Card className="mb-6 border-red-200 bg-red-50/50 backdrop-blur-sm">
+          <Card className="mb-6 border-red-200 bg-red-50">
             <div className="text-red-800 font-light">{error}</div>
           </Card>
         )}
 
         {/* Results Header */}
         {!isLoading && (
-          <div className="mb-6 flex items-center justify-between">
-            <div className="text-slate-600 font-light text-lg">
-              Found {properties.length} {properties.length === 1 ? 'property' : 'properties'}
+          <div className="mb-6">
+            <div className="text-slate-600 font-light">
+              {properties.length} {properties.length === 1 ? 'property' : 'properties'}
             </div>
           </div>
         )}
@@ -301,24 +288,24 @@ const PropertySearch: React.FC = () => {
         {isLoading && (
           <div className="flex justify-center items-center py-16">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-cyan-500 mx-auto mb-4"></div>
-              <p className="text-slate-600 font-light">Searching properties...</p>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900 mx-auto mb-4"></div>
+              <p className="text-slate-600 font-light">Loading properties...</p>
             </div>
           </div>
         )}
 
         {/* No Results */}
         {!isLoading && properties.length === 0 && (
-          <Card className="text-center py-16 bg-white/95 backdrop-blur-sm">
+          <Card className="text-center py-16 bg-white">
             <SearchIcon size="xl" className="mx-auto text-slate-400 mb-4" />
             <h3 className="text-xl font-light text-slate-900 mb-2 tracking-tight">
-              No properties found
+              No properties match your criteria
             </h3>
             <p className="text-slate-600 font-light mb-6">
-              Try adjusting your search criteria to find more results.
+              Try adjusting your filters to see more results
             </p>
             <Button onClick={handleReset} variant="outline" className="font-light">
-              Reset Search
+              RESET SEARCH
             </Button>
           </Card>
         )}
@@ -399,11 +386,10 @@ const PropertySearch: React.FC = () => {
                     {/* Price */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <MoneyIcon size="sm" className="text-cyan-600 mr-2" />
-                        <span className="text-2xl font-light text-cyan-600">
+                        <span className="text-2xl font-light text-slate-900">
                           {formatCurrency(property.rentAmount)}
                         </span>
-                        <span className="text-slate-500 ml-1 font-light">/mo</span>
+                        <span className="text-slate-500 ml-1 font-light text-sm">/month</span>
                       </div>
                     </div>
                   </div>

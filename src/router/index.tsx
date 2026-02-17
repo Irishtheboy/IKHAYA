@@ -13,17 +13,21 @@ const Dashboard = lazy(() => import('../pages/Dashboard'));
 const PropertySearch = lazy(() => import('../pages/PropertySearch'));
 const PropertyDetail = lazy(() => import('../pages/PropertyDetail'));
 const PropertyCreate = lazy(() => import('../pages/PropertyCreate'));
+const PropertyEdit = lazy(() => import('../pages/PropertyEdit'));
 const PropertiesManage = lazy(() => import('../pages/PropertiesManage'));
 const LeadCreate = lazy(() => import('../pages/LeadCreate'));
 const LeadDetail = lazy(() => import('../pages/LeadDetail'));
 const Leads = lazy(() => import('../pages/Leads'));
 const Leases = lazy(() => import('../pages/Leases'));
+const LeaseCreate = lazy(() => import('../pages/LeaseCreate'));
+const LeaseDetail = lazy(() => import('../pages/LeaseDetail'));
 const Maintenance = lazy(() => import('../pages/Maintenance'));
 const Payments = lazy(() => import('../pages/Payments'));
 const InvoiceDetail = lazy(() => import('../pages/InvoiceDetail'));
 const PaymentRecord = lazy(() => import('../pages/PaymentRecord'));
 const AdminLandlords = lazy(() => import('../pages/AdminLandlords'));
 const AdminUsers = lazy(() => import('../pages/AdminUsers'));
+const ProfileSettings = lazy(() => import('../pages/ProfileSettings'));
 
 // Loading component
 const PageLoader = () => (
@@ -67,6 +71,16 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: '/profile/settings',
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <ProfileSettings />
+        </ProtectedRoute>
+      </Suspense>
+    ),
+  },
+  {
     path: '/search',
     element: (
       <Suspense fallback={<PageLoader />}>
@@ -80,6 +94,16 @@ const router = createBrowserRouter([
       <Suspense fallback={<PageLoader />}>
         <ProtectedRoute>
           <PropertyCreate />
+        </ProtectedRoute>
+      </Suspense>
+    ),
+  },
+  {
+    path: '/properties/:propertyId/edit',
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <PropertyEdit />
         </ProtectedRoute>
       </Suspense>
     ),
@@ -146,6 +170,26 @@ const router = createBrowserRouter([
       <Suspense fallback={<PageLoader />}>
         <ProtectedRoute>
           <Leases />
+        </ProtectedRoute>
+      </Suspense>
+    ),
+  },
+  {
+    path: '/leases/create',
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <LeaseCreate />
+        </ProtectedRoute>
+      </Suspense>
+    ),
+  },
+  {
+    path: '/leases/:leaseId',
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <ProtectedRoute>
+          <LeaseDetail />
         </ProtectedRoute>
       </Suspense>
     ),
