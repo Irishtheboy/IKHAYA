@@ -21,20 +21,6 @@ interface NominatimResult {
   };
 }
 
-interface OverpassPlace {
-  type: string;
-  id: number;
-  lat: number;
-  lon: number;
-  tags: {
-    name?: string;
-    amenity?: string;
-    shop?: string;
-    tourism?: string;
-    [key: string]: any;
-  };
-}
-
 interface NearbyPlace {
   name: string;
   distance: string;

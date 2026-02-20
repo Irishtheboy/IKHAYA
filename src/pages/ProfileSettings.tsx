@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layout } from '../components/layout/Layout';
 import { useAuth } from '../contexts/AuthContext';
-import { authService } from '../services/authService';
 import { cloudinaryService } from '../services/cloudinaryService';
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';

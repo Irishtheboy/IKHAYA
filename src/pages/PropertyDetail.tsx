@@ -546,9 +546,9 @@ const PropertyDetail: React.FC = () => {
                       </button>
                       <p className="text-xs text-slate-500 text-center font-light">
                         By submitting this form you agree to our{' '}
-                        <a href="#" className="text-slate-700 hover:underline">
+                        <button type="button" className="text-slate-700 hover:underline">
                           Terms & Conditions
-                        </a>
+                        </button>
                       </p>
                     </form>
                   </div>
