@@ -31,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
-    "test:ci": "CI=true react-scripts test --coverage",
+    "test:ci": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "emulators": "firebase emulators:start",
     "deploy": "npm run build && firebase deploy",

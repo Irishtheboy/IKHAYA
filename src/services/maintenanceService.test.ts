@@ -2,6 +2,9 @@ import { maintenanceService, MaintenanceRequestDTO } from './maintenanceService'
 import { MaintenanceRequest, MaintenanceStatus } from '../types/firebase';
 import { Timestamp } from 'firebase/firestore';
 
+import * as firestore from 'firebase/firestore';
+import { cloudinaryService } from './cloudinaryService';
+
 // Mock Firebase modules
 jest.mock('../config/firebase', () => ({
   db: {},
@@ -53,13 +56,20 @@ jest.mock('./cloudinaryService', () => ({
   },
 }));
 
-import * as firestore from 'firebase/firestore';
-import { cloudinaryService } from './cloudinaryService';
-
 describe('MaintenanceService', () => {
   beforeEach(() => {
-    // Don't clear mocks - they're defined at module level
-    // jest.clearAllMocks();
+    jest.clearAllMocks();
+
+    let docIdCounter = 0;
+
+    (firestore.collection as jest.Mock).mockReturnValue({});
+    (firestore.doc as jest.Mock).mockImplementation((...args: any[]) => {
+      if (args.length === 3 && args[2]) {
+        return { id: args[2] };
+      }
+
+      return { id: `mock-maintenance-${++docIdCounter}` };
+    });
   });
 
   describe('createMaintenanceRequest', () => {

@@ -172,11 +172,7 @@ describe('Property-Based Tests', () => {
           const optimized = getOptimizedImageUrl(url, isMobile);
 
           // Optimized URL should contain size parameter
-          if (isMobile) {
-            expect(optimized).toContain('w=800');
-          } else {
-            expect(optimized).toContain('w=1200');
-          }
+          expect(optimized).toContain(isMobile ? 'w=800' : 'w=1200');
 
           // Original URL structure should be preserved
           expect(optimized).toContain('firebasestorage.googleapis.com');
@@ -226,11 +222,11 @@ describe('Property-Based Tests', () => {
 
           // Each Firebase URL should be optimized
           images.forEach((url, index) => {
-            if (url.includes('firebasestorage.googleapis.com')) {
-              expect(optimized[index]).toContain('w=');
-            } else {
-              expect(optimized[index]).toBe(url);
-            }
+            expect(
+              url.includes('firebasestorage.googleapis.com')
+                ? optimized[index].includes('w=')
+                : optimized[index] === url
+            ).toBe(true);
           });
         }),
         { numRuns: 100 }
@@ -267,11 +263,7 @@ describe('Property-Based Tests', () => {
           const isMobile = isMobileDevice();
 
           // Mobile detection should match expected threshold
-          if (width < 768) {
-            expect(isMobile).toBe(true);
-          } else {
-            expect(isMobile).toBe(false);
-          }
+          expect(isMobile).toBe(width < 768);
         }),
         { numRuns: 100 }
       );

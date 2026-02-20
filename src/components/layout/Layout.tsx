@@ -78,7 +78,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               {currentUser ? (
                 <>
                   <NotificationDropdown />
-                  
+
                   {/* User Profile Section */}
                   <div className="flex items-center space-x-3">
                     {userProfile?.profileImage ? (
@@ -89,14 +89,26 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                       />
                     ) : (
                       <div className="h-8 w-8 rounded-full bg-gray-600 flex items-center justify-center border-2 border-cyan-500">
-                        <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        <svg
+                          className="h-5 w-5 text-white"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                          />
                         </svg>
                       </div>
                     )}
-                    <span className="text-gray-300 text-sm font-light">{userProfile?.name || userProfile?.email}</span>
+                    <span className="text-gray-300 text-sm font-light">
+                      {userProfile?.name || userProfile?.email}
+                    </span>
                   </div>
-                  
+
                   <Link
                     to="/profile/settings"
                     className="text-gray-300 hover:text-white px-3 py-2 text-sm font-light tracking-wide transition-colors"

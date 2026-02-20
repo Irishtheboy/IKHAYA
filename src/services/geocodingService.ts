@@ -92,12 +92,7 @@ class GeocodingService {
 
       return {
         address: result.display_name.split(',')[0] || query,
-        city:
-          address.city ||
-          address.town ||
-          address.municipality ||
-          address.suburb ||
-          '',
+        city: address.city || address.town || address.municipality || address.suburb || '',
         province: address.state || '',
         postalCode: address.postcode || '',
         latitude: parseFloat(result.lat),
@@ -282,7 +277,8 @@ class GeocodingService {
           places.push({
             name: element.tags.name,
             distance: `${distance.toFixed(2)}km`,
-            type: element.tags.amenity || element.tags.natural || element.tags.leisure || 'location',
+            type:
+              element.tags.amenity || element.tags.natural || element.tags.leisure || 'location',
           });
         }
       }
@@ -302,12 +298,7 @@ class GeocodingService {
    * @param lon2 - Longitude of second point
    * @returns Distance in kilometers
    */
-  private calculateDistance(
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number
-  ): number {
+  private calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
     const R = 6371; // Earth's radius in kilometers
     const dLat = this.toRadians(lat2 - lat1);
     const dLon = this.toRadians(lon2 - lon1);

@@ -75,7 +75,7 @@ class CloudinaryService {
       return response.data.secure_url;
     } catch (error: any) {
       console.error('Error uploading image to Cloudinary:', error);
-      
+
       // Provide more specific error messages
       if (error.code === 'ERR_NETWORK') {
         throw new Error('Network error. Please check your internet connection and try again.');

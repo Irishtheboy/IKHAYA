@@ -22,10 +22,7 @@ describe('Validation Utils', () => {
       fc.assert(
         fc.property(fc.emailAddress(), (email) => {
           const result = isValidEmail(email);
-          if (result) {
-            expect(email).toContain('@');
-            expect(email.split('@')[1]).toContain('.');
-          }
+          expect(!result || (email.includes('@') && email.split('@')[1].includes('.'))).toBe(true);
         }),
         { numRuns: 100 }
       );

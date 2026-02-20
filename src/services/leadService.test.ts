@@ -2,6 +2,8 @@ import { leadService, CreateLeadDTO, SendMessageDTO } from './leadService';
 import { Lead, LeadStatus, Message } from '../types/firebase';
 import { Timestamp } from 'firebase/firestore';
 
+import * as firestore from 'firebase/firestore';
+
 // Mock Firebase
 jest.mock('../config/firebase', () => ({
   db: {},
@@ -32,8 +34,6 @@ jest.mock('firebase/firestore', () => ({
     })),
   },
 }));
-
-import * as firestore from 'firebase/firestore';
 
 describe('LeadService', () => {
   beforeEach(() => {

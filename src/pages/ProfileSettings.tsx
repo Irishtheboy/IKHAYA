@@ -35,7 +35,7 @@ const ProfileSettings: React.FC = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      
+
       // Validate file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
         setError('Image size must be less than 5MB');
@@ -64,7 +64,7 @@ const ProfileSettings: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!currentUser || !userProfile) {
       setError('You must be logged in to update your profile');
       return;
@@ -116,7 +116,9 @@ const ProfileSettings: React.FC = () => {
       <Layout>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Card>
-            <p className="text-center text-gray-600">Please log in to view your profile settings.</p>
+            <p className="text-center text-gray-600">
+              Please log in to view your profile settings.
+            </p>
           </Card>
         </div>
       </Layout>
@@ -148,9 +150,7 @@ const ProfileSettings: React.FC = () => {
 
             {/* Profile Image */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Profile Image
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Profile Image</label>
               <div className="flex items-center space-x-6">
                 <div className="flex-shrink-0">
                   {previewUrl ? (
@@ -253,7 +253,11 @@ const ProfileSettings: React.FC = () => {
               <input
                 type="text"
                 id="role"
-                value={userProfile?.role ? userProfile.role.charAt(0).toUpperCase() + userProfile.role.slice(1) : ''}
+                value={
+                  userProfile?.role
+                    ? userProfile.role.charAt(0).toUpperCase() + userProfile.role.slice(1)
+                    : ''
+                }
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-500 capitalize"
                 disabled
                 readOnly
@@ -271,11 +275,7 @@ const ProfileSettings: React.FC = () => {
             >
               Cancel
             </Button>
-            <Button
-              type="submit"
-              loading={isLoading}
-              className="bg-cyan-500 hover:bg-cyan-600"
-            >
+            <Button type="submit" loading={isLoading} className="bg-cyan-500 hover:bg-cyan-600">
               Save Changes
             </Button>
           </div>

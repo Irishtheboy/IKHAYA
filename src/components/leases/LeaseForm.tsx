@@ -150,7 +150,10 @@ const LeaseForm: React.FC<LeaseFormProps> = ({
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6 bg-white rounded-lg shadow-sm border border-slate-200 p-8">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-6 bg-white rounded-lg shadow-sm border border-slate-200 p-8"
+      >
         {/* Property Selection */}
         <div>
           <label htmlFor="propertyId" className="block text-sm font-light text-slate-700 mb-2">

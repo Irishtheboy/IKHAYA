@@ -576,9 +576,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
               type="checkbox"
               id="garden"
               checked={formData.hasGarden || false}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, hasGarden: e.target.checked }))
-              }
+              onChange={(e) => setFormData((prev) => ({ ...prev, hasGarden: e.target.checked }))}
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               disabled={isLoading}
             />
@@ -596,7 +594,10 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
           Add nearby schools and educational institutions (auto-populated from address search)
         </p>
 
-        {(formData.nearbySchools && formData.nearbySchools.length > 0 ? formData.nearbySchools : [{ name: '', distance: '' }]).map((school, index) => (
+        {(formData.nearbySchools && formData.nearbySchools.length > 0
+          ? formData.nearbySchools
+          : [{ name: '', distance: '' }]
+        ).map((school, index) => (
           <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">School Name</label>
@@ -668,10 +669,14 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
       <div className="bg-white shadow rounded-lg p-6">
         <h3 className="text-lg font-medium text-gray-900 mb-4">Nearby Food & Entertainment</h3>
         <p className="text-sm text-gray-600 mb-4">
-          Add nearby restaurants, cafes, and entertainment venues (auto-populated from address search)
+          Add nearby restaurants, cafes, and entertainment venues (auto-populated from address
+          search)
         </p>
 
-        {(formData.nearbyRestaurants && formData.nearbyRestaurants.length > 0 ? formData.nearbyRestaurants : [{ name: '', distance: '' }]).map((restaurant, index) => (
+        {(formData.nearbyRestaurants && formData.nearbyRestaurants.length > 0
+          ? formData.nearbyRestaurants
+          : [{ name: '', distance: '' }]
+        ).map((restaurant, index) => (
           <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Place Name</label>
@@ -679,7 +684,9 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
                 type="text"
                 value={restaurant.name}
                 onChange={(e) => {
-                  const currentRestaurants = formData.nearbyRestaurants || [{ name: '', distance: '' }];
+                  const currentRestaurants = formData.nearbyRestaurants || [
+                    { name: '', distance: '' },
+                  ];
                   const newRestaurants = [...currentRestaurants];
                   newRestaurants[index] = { ...newRestaurants[index], name: e.target.value };
                   setFormData((prev) => ({ ...prev, nearbyRestaurants: newRestaurants }));
@@ -696,7 +703,9 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
                   type="text"
                   value={restaurant.distance}
                   onChange={(e) => {
-                    const currentRestaurants = formData.nearbyRestaurants || [{ name: '', distance: '' }];
+                    const currentRestaurants = formData.nearbyRestaurants || [
+                      { name: '', distance: '' },
+                    ];
                     const newRestaurants = [...currentRestaurants];
                     newRestaurants[index] = { ...newRestaurants[index], distance: e.target.value };
                     setFormData((prev) => ({ ...prev, nearbyRestaurants: newRestaurants }));
@@ -745,10 +754,14 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
           Nearby Transport & Public Services
         </h3>
         <p className="text-sm text-gray-600 mb-4">
-          Add nearby transport stations, beaches, and public services (auto-populated from address search)
+          Add nearby transport stations, beaches, and public services (auto-populated from address
+          search)
         </p>
 
-        {(formData.nearbyTransport && formData.nearbyTransport.length > 0 ? formData.nearbyTransport : [{ name: '', distance: '' }]).map((transport, index) => (
+        {(formData.nearbyTransport && formData.nearbyTransport.length > 0
+          ? formData.nearbyTransport
+          : [{ name: '', distance: '' }]
+        ).map((transport, index) => (
           <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Location Name</label>
@@ -773,7 +786,9 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
                   type="text"
                   value={transport.distance}
                   onChange={(e) => {
-                    const currentTransport = formData.nearbyTransport || [{ name: '', distance: '' }];
+                    const currentTransport = formData.nearbyTransport || [
+                      { name: '', distance: '' },
+                    ];
                     const newTransport = [...currentTransport];
                     newTransport[index] = { ...newTransport[index], distance: e.target.value };
                     setFormData((prev) => ({ ...prev, nearbyTransport: newTransport }));

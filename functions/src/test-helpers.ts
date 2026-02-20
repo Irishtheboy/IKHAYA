@@ -16,7 +16,9 @@ export interface MockUser {
 /**
  * Create a mock Firebase Auth user
  */
-export function createMockAuthUser(data: Partial<MockUser> = {}): any {
+export function createMockAuthUser(
+  data: Partial<MockUser> = {}
+): Record<string, unknown> {
   return {
     uid: data.uid || "test-user-123",
     email: data.email || "test@example.com",
@@ -34,7 +36,9 @@ export function createMockAuthUser(data: Partial<MockUser> = {}): any {
 /**
  * Create mock Firestore user document data
  */
-export function createMockUserDoc(data: Partial<MockUser> = {}): any {
+export function createMockUserDoc(
+  data: Partial<MockUser> = {}
+): Record<string, unknown> {
   return {
     uid: data.uid || "test-user-123",
     email: data.email || "test@example.com",

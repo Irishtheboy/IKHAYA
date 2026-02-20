@@ -4,6 +4,19 @@ import * as admin from "firebase-admin";
 // Initialize Firebase Admin SDK
 admin.initializeApp();
 
+interface ActiveLease {
+  id: string;
+  landlordId: string;
+  propertyId: string;
+  rentAmount: number;
+}
+
+interface InvoiceItem {
+  leaseId: string;
+  description: string;
+  amount: number;
+}
+
 /**
  * Cloud Function triggered when a new user is created in Firebase Auth
  * Sets up user profile in Firestore, sets custom claims based on role,
@@ -225,7 +238,10 @@ The IKHAYA RENT PROPERTIES Team`,
         html: `
           <h2>New Property Inquiry</h2>
           <p>Hello ${landlord?.name},</p>
-          <p>You have received a new inquiry for your property at <strong>${property?.address}</strong>.</p>
+          <p>
+            You have received a new inquiry for your property at
+            <strong>${property?.address}</strong>.
+          </p>
           <h3>Tenant Information:</h3>
           <ul>
             <li><strong>Name:</strong> ${tenant?.name}</li>
@@ -284,7 +300,11 @@ export const onMessageCreate = functions.firestore
       }
 
       const lead = leadDoc.data();
-      const {tenantId, landlordId, propertyId} = lead!;
+      if (!lead) {
+        console.error(`Lead data missing for: ${leadId}`);
+        return;
+      }
+      const {tenantId, landlordId, propertyId} = lead;
 
       // Determine recipient (the person who didn't send the message)
       const recipientId = senderId === tenantId ? landlordId : tenantId;
@@ -365,7 +385,10 @@ The IKHAYA RENT PROPERTIES Team`,
         html: `
           <h2>New Message</h2>
           <p>Hello ${recipient?.name},</p>
-          <p>You have received a new message from <strong>${sender?.name}</strong> regarding the property at <strong>${property?.address}</strong>.</p>
+          <p>
+            You have received a new message from <strong>${sender?.name}</strong>
+            {" "}regarding the property at <strong>${property?.address}</strong>.
+          </p>
           <h3>Message:</h3>
           <p>${content}</p>
           <p>Please log in to your dashboard to respond.</p>
@@ -513,7 +536,7 @@ export const onLeaseUpdate = functions.firestore
 export const checkExpiringLeases = functions.pubsub
   .schedule("0 9 * * *")
   .timeZone("UTC")
-  .onRun(async (context) => {
+  .onRun(async (_context) => {
     try {
       console.log("Starting expiring leases check...");
 
@@ -546,7 +569,7 @@ export const checkExpiringLeases = functions.pubsub
       }
 
       // Process each expiring lease
-      const notificationPromises: Promise<any>[] = [];
+      const notificationPromises: Promise<unknown>[] = [];
 
       for (const leaseDoc of expiringLeasesSnapshot.docs) {
         const lease = leaseDoc.data();
@@ -592,7 +615,9 @@ export const checkExpiringLeases = functions.pubsub
           userId: lease.landlordId,
           type: "lease_expiring",
           title: "Lease Expiring Soon",
-          message: `Your lease for ${property?.address || "a property"} expires in ${daysUntilExpiration} days`,
+          message:
+            `Your lease for ${property?.address || "a property"} ` +
+            `expires in ${daysUntilExpiration} days`,
           link: `/leases/${leaseId}`,
           priority: "high",
           read: false,
@@ -604,7 +629,9 @@ export const checkExpiringLeases = functions.pubsub
           userId: lease.tenantId,
           type: "lease_expiring",
           title: "Lease Expiring Soon",
-          message: `Your lease for ${property?.address || "a property"} expires in ${daysUntilExpiration} days`,
+          message:
+            `Your lease for ${property?.address || "a property"} ` +
+            `expires in ${daysUntilExpiration} days`,
           link: `/leases/${leaseId}`,
           priority: "high",
           read: false,
@@ -625,7 +652,8 @@ export const checkExpiringLeases = functions.pubsub
           subject: "Lease Expiring Soon - IKHAYA RENT PROPERTIES",
           text: `Hello ${landlord?.name},
 
-This is a reminder that your lease for the property at ${property?.address} will expire in ${daysUntilExpiration} days.
+This is a reminder that your lease for the property at ${property?.address}
+will expire in ${daysUntilExpiration} days.
 
 Lease Details:
 - Property: ${property?.address}
@@ -640,7 +668,11 @@ The IKHAYA RENT PROPERTIES Team`,
           html: `
             <h2>Lease Expiring Soon</h2>
             <p>Hello ${landlord?.name},</p>
-            <p>This is a reminder that your lease for the property at <strong>${property?.address}</strong> will expire in <strong>${daysUntilExpiration} days</strong>.</p>
+            <p>
+              This is a reminder that your lease for the property at
+              <strong>${property?.address}</strong> will expire in
+              <strong>${daysUntilExpiration} days</strong>.
+            </p>
             <h3>Lease Details:</h3>
             <ul>
               <li><strong>Property:</strong> ${property?.address}</li>
@@ -648,7 +680,10 @@ The IKHAYA RENT PROPERTIES Team`,
               <li><strong>End Date:</strong> ${endDate.toLocaleDateString()}</li>
               <li><strong>Monthly Rent:</strong> R${lease.rentAmount}</li>
             </ul>
-            <p>Please contact your tenant to discuss lease renewal or make arrangements for the property handover.</p>
+            <p>
+              Please contact your tenant to discuss lease renewal or make
+              arrangements for the property handover.
+            </p>
             <p>Best regards,<br>The IKHAYA RENT PROPERTIES Team</p>
           `,
         };
@@ -658,7 +693,8 @@ The IKHAYA RENT PROPERTIES Team`,
           subject: "Lease Expiring Soon - IKHAYA RENT PROPERTIES",
           text: `Hello ${tenant?.name},
 
-This is a reminder that your lease for the property at ${property?.address} will expire in ${daysUntilExpiration} days.
+This is a reminder that your lease for the property at ${property?.address}
+will expire in ${daysUntilExpiration} days.
 
 Lease Details:
 - Property: ${property?.address}
@@ -673,7 +709,11 @@ The IKHAYA RENT PROPERTIES Team`,
           html: `
             <h2>Lease Expiring Soon</h2>
             <p>Hello ${tenant?.name},</p>
-            <p>This is a reminder that your lease for the property at <strong>${property?.address}</strong> will expire in <strong>${daysUntilExpiration} days</strong>.</p>
+            <p>
+              This is a reminder that your lease for the property at
+              <strong>${property?.address}</strong> will expire in
+              <strong>${daysUntilExpiration} days</strong>.
+            </p>
             <h3>Lease Details:</h3>
             <ul>
               <li><strong>Property:</strong> ${property?.address}</li>
@@ -681,7 +721,10 @@ The IKHAYA RENT PROPERTIES Team`,
               <li><strong>End Date:</strong> ${endDate.toLocaleDateString()}</li>
               <li><strong>Monthly Rent:</strong> R${lease.rentAmount}</li>
             </ul>
-            <p>Please contact your landlord to discuss lease renewal or make arrangements for moving out.</p>
+            <p>
+              Please contact your landlord to discuss lease renewal or make
+              arrangements for moving out.
+            </p>
             <p>Best regards,<br>The IKHAYA RENT PROPERTIES Team</p>
           `,
         };
@@ -774,7 +817,9 @@ export const onMaintenanceRequestCreate = functions.firestore
         userId: landlordId,
         type: "maintenance_request",
         title: "New Maintenance Request",
-        message: `${tenant?.name} submitted a ${priority} priority ${category} request for ${property?.address}`,
+        message:
+          `${tenant?.name} submitted a ${priority} priority ${category} ` +
+          `request for ${property?.address}`,
         link: `/maintenance/${requestId}`,
         priority: priority === "urgent" ? "high" : "medium",
         read: false,
@@ -806,11 +851,18 @@ The IKHAYA RENT PROPERTIES Team`,
         html: `
           <h2>New Maintenance Request</h2>
           <p>Hello ${landlord?.name},</p>
-          <p>A new maintenance request has been submitted for your property at <strong>${property?.address}</strong>.</p>
+          <p>
+            A new maintenance request has been submitted for your property at
+            <strong>${property?.address}</strong>.
+          </p>
           <h3>Request Details:</h3>
           <ul>
             <li><strong>Category:</strong> ${category}</li>
-            <li><strong>Priority:</strong> <span style="color: ${priority === "urgent" ? "red" : priority === "high" ? "orange" : "black"}">${priority}</span></li>
+            <li>
+              <strong>Priority:</strong>
+              <span style="color: ${priority === "urgent" ? "red" :
+                priority === "high" ? "orange" : "black"}">${priority}</span>
+            </li>
             <li><strong>Tenant:</strong> ${tenant?.name}</li>
             <li><strong>Description:</strong> ${description}</li>
           </ul>
@@ -891,17 +943,17 @@ export const onMaintenanceRequestUpdate = functions.firestore
       // Create status message
       let statusMessage = "";
       switch (status) {
-        case "in_progress":
-          statusMessage = "is now being worked on";
-          break;
-        case "completed":
-          statusMessage = "has been completed";
-          break;
-        case "cancelled":
-          statusMessage = "has been cancelled";
-          break;
-        default:
-          statusMessage = `status has been updated to ${status}`;
+      case "in_progress":
+        statusMessage = "is now being worked on";
+        break;
+      case "completed":
+        statusMessage = "has been completed";
+        break;
+      case "cancelled":
+        statusMessage = "has been cancelled";
+        break;
+      default:
+        statusMessage = `status has been updated to ${status}`;
       }
 
       // Create in-app notification for tenant
@@ -937,7 +989,10 @@ The IKHAYA RENT PROPERTIES Team`,
         html: `
           <h2>Maintenance Request Update</h2>
           <p>Hello ${tenant?.name},</p>
-          <p>Your maintenance request for the property at <strong>${property?.address}</strong> ${statusMessage}.</p>
+          <p>
+            Your maintenance request for the property at
+            <strong>${property?.address}</strong> ${statusMessage}.
+          </p>
           <p><strong>Request Status:</strong> ${status}</p>
           <p>Please log in to your dashboard to view the details.</p>
           <p>Best regards,<br>The IKHAYA RENT PROPERTIES Team</p>
@@ -1264,7 +1319,7 @@ export const createGroupedNotification = functions.https.onCall(async (data, con
 export const generateMonthlyInvoices = functions.pubsub
   .schedule("0 9 1 * *")
   .timeZone("UTC")
-  .onRun(async (context) => {
+  .onRun(async (_context) => {
     try {
       console.log("Starting monthly invoice generation...");
 
@@ -1287,7 +1342,7 @@ export const generateMonthlyInvoices = functions.pubsub
       }
 
       // Group leases by landlord
-      const leasesByLandlord = new Map<string, any[]>();
+      const leasesByLandlord = new Map<string, ActiveLease[]>();
 
       activeLeasesSnapshot.docs.forEach((doc) => {
         const lease = doc.data();
@@ -1297,9 +1352,15 @@ export const generateMonthlyInvoices = functions.pubsub
           leasesByLandlord.set(landlordId, []);
         }
 
-        leasesByLandlord.get(landlordId)!.push({
+        const existingLeases = leasesByLandlord.get(landlordId);
+        if (!existingLeases) {
+          continue;
+        }
+        existingLeases.push({
           id: doc.id,
-          ...lease,
+          landlordId: lease.landlordId,
+          propertyId: lease.propertyId,
+          rentAmount: lease.rentAmount,
         });
       });
 
@@ -1309,11 +1370,11 @@ export const generateMonthlyInvoices = functions.pubsub
       const COMMISSION_RATE = 0.10;
 
       // Generate invoice for each landlord
-      const invoicePromises: Promise<any>[] = [];
+      const invoicePromises: Promise<string>[] = [];
 
       for (const [landlordId, leases] of leasesByLandlord.entries()) {
         // Calculate commission for each lease and build invoice items
-        const items: any[] = [];
+        const items: InvoiceItem[] = [];
         let totalAmount = 0;
 
         for (const lease of leases) {
@@ -1402,7 +1463,10 @@ The IKHAYA RENT PROPERTIES Team`,
                     <li><strong>Due Date:</strong> ${dueDate.toLocaleDateString()}</li>
                     <li><strong>Number of Properties:</strong> ${items.length}</li>
                   </ul>
-                  <p>Please log in to your dashboard to view the invoice details and make payment.</p>
+                  <p>
+                    Please log in to your dashboard to view the invoice details
+                    and make payment.
+                  </p>
                   <p>Best regards,<br>The IKHAYA RENT PROPERTIES Team</p>
                 `,
               };
@@ -1448,7 +1512,7 @@ The IKHAYA RENT PROPERTIES Team`,
 export const sendOverduePaymentReminders = functions.pubsub
   .schedule("0 10 * * *")
   .timeZone("UTC")
-  .onRun(async (context) => {
+  .onRun(async (_context) => {
     try {
       console.log("Starting overdue payment reminders check...");
 
@@ -1476,7 +1540,7 @@ export const sendOverduePaymentReminders = functions.pubsub
       }
 
       // Update invoice status to overdue and send reminders
-      const reminderPromises: Promise<any>[] = [];
+      const reminderPromises: Promise<unknown>[] = [];
 
       for (const invoiceDoc of overdueInvoicesSnapshot.docs) {
         const invoice = invoiceDoc.data();
@@ -1515,7 +1579,9 @@ export const sendOverduePaymentReminders = functions.pubsub
           userId: landlordId,
           type: "payment_due",
           title: "Overdue Payment Reminder",
-          message: `Your commission payment of R${invoice.amount.toFixed(2)} is ${daysOverdue} days overdue`,
+          message:
+            `Your commission payment of R${invoice.amount.toFixed(2)} ` +
+            `is ${daysOverdue} days overdue`,
           link: `/invoices/${invoiceId}`,
           priority: "high",
           read: false,
@@ -1546,12 +1612,18 @@ The IKHAYA RENT PROPERTIES Team`,
           html: `
             <h2>Overdue Payment Reminder</h2>
             <p>Hello ${landlord?.name},</p>
-            <p>This is a reminder that your commission payment is <strong style="color: red;">overdue</strong>.</p>
+            <p>
+              This is a reminder that your commission payment is
+              <strong style="color: red;">overdue</strong>.
+            </p>
             <h3>Invoice Details:</h3>
             <ul>
               <li><strong>Amount:</strong> R${invoice.amount.toFixed(2)}</li>
               <li><strong>Due Date:</strong> ${dueDate.toLocaleDateString()}</li>
-              <li><strong>Days Overdue:</strong> <span style="color: red;">${daysOverdue}</span></li>
+              <li>
+                <strong>Days Overdue:</strong>
+                <span style="color: red;">${daysOverdue}</span>
+              </li>
             </ul>
             <p>Please make payment as soon as possible to avoid any service interruptions.</p>
             <p>Best regards,<br>The IKHAYA RENT PROPERTIES Team</p>
@@ -1706,7 +1778,8 @@ The IKHAYA RENT PROPERTIES Team`,
           </ul>
           ${totalPaid >= (invoice?.amount || 0) ?
     "<p><strong style=\"color: green;\">Your invoice has been fully paid. Thank you!</strong></p>" :
-    `<p><strong>Remaining balance:</strong> R${((invoice?.amount || 0) - totalPaid).toFixed(2)}</p>`}
+    `<p><strong>Remaining balance:</strong>
+      R${((invoice?.amount || 0) - totalPaid).toFixed(2)}</p>`}
           <p>Thank you for your payment.</p>
           <p>Best regards,<br>The IKHAYA RENT PROPERTIES Team</p>
         `,
